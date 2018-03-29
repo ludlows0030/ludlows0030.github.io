@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Ludlows&#39; Blog">
 <meta property="og:description" content="Camera-relative移动基本实现思路 先实现角色模型的旋转1.1 获取按键的水平和垂直输入并保存在一个零向量中1.2 使角色围绕摄像机的y轴进行旋转1.3 插值运算使旋转平滑 代码（C#） void Update(){ Vector3 movement = new Vector3.zero;  float horInput = Get.Axis(&amp;quot;Horizontal&amp;quot">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-29T07:01:49.825Z">
+<meta property="og:updated_time" content="2018-03-29T07:05:17.286Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简易3d游戏制作笔记_02">
 <meta name="twitter:description" content="Camera-relative移动基本实现思路 先实现角色模型的旋转1.1 获取按键的水平和垂直输入并保存在一个零向量中1.2 使角色围绕摄像机的y轴进行旋转1.3 插值运算使旋转平滑 代码（C#） void Update(){ Vector3 movement = new Vector3.zero;  float horInput = Get.Axis(&amp;quot;Horizontal&amp;quot">
@@ -324,8 +324,6 @@ transform.rotation = Quaternion.Lerp(transform.rotation,direction,rotSpeed*Time.
 </code></pre></li>
 <li><p>实现角色的移动<br>2.1 给角色模型添加CharacterController组件<br>2.2 给水平和垂直输入乘以一个移动的速度<br>2.3 限制对角线移动时的速度</p>
 <p>代码（C#） //以前面的代码为基础</p>
-</li>
-</ol>
 <pre><code>void Start(){
   charController = GetComponent&lt;CharacterController&gt;();
 }
@@ -338,10 +336,9 @@ float vertInput = Get.Axis(&quot;Vertical&quot;);
 if(horInput!=0&amp;&amp;vertInput!=0){
   movement.x = horInput*moveSpeed;
   movement.z = vertInput*moveSpeed;
-}
 
-movement = Vector3.ClapMagnitude(movement,moveSpeed);
-movement*=Time.deltime;
+  movement = Vector3.ClapMagnitude(movement,moveSpeed);
+}
 
 Quaternion temp = target.rotation; //target为摄像机Transform
 target.eulerAngles = new Vector3(0,target.eulerAngles.y,0);
@@ -351,9 +348,12 @@ target.rotation = temp;
 Quaternion direction = Quaternion.LookRotation(movement);
 transform.rotation = Quaternion.Lerp(transform.rotation,direction,rotSpeed*Time.deltime);
 
+movement*=Time.deltime;
 charController.Move(movement);
 }
-</code></pre><p>本节脚本添加在角色模型上</p>
+</code></pre></li>
+</ol>
+<p>本节脚本添加在角色模型上</p>
 
       
     </div>

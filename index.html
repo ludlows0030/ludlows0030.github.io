@@ -324,8 +324,6 @@ transform.rotation = Quaternion.Lerp(transform.rotation,direction,rotSpeed*Time.
 </code></pre></li>
 <li><p>实现角色的移动<br>2.1 给角色模型添加CharacterController组件<br>2.2 给水平和垂直输入乘以一个移动的速度<br>2.3 限制对角线移动时的速度</p>
 <p>代码（C#） //以前面的代码为基础</p>
-</li>
-</ol>
 <pre><code>void Start(){
   charController = GetComponent&lt;CharacterController&gt;();
 }
@@ -338,10 +336,9 @@ float vertInput = Get.Axis(&quot;Vertical&quot;);
 if(horInput!=0&amp;&amp;vertInput!=0){
   movement.x = horInput*moveSpeed;
   movement.z = vertInput*moveSpeed;
-}
 
-movement = Vector3.ClapMagnitude(movement,moveSpeed);
-movement*=Time.deltime;
+  movement = Vector3.ClapMagnitude(movement,moveSpeed);
+}
 
 Quaternion temp = target.rotation; //target为摄像机Transform
 target.eulerAngles = new Vector3(0,target.eulerAngles.y,0);
@@ -351,9 +348,12 @@ target.rotation = temp;
 Quaternion direction = Quaternion.LookRotation(movement);
 transform.rotation = Quaternion.Lerp(transform.rotation,direction,rotSpeed*Time.deltime);
 
+movement*=Time.deltime;
 charController.Move(movement);
 }
-</code></pre><p>本节脚本添加在角色模型上</p>
+</code></pre></li>
+</ol>
+<p>本节脚本添加在角色模型上</p>
 
           
         

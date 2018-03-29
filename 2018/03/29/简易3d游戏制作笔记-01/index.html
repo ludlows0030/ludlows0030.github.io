@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="Ludlows&#39; Blog">
 <meta property="og:description" content="摄像机环绕角色进行旋转基本实现思路 获得摄像机和角色模型的初始Transform偏移值 将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation 通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置 通过代码使摄像机面对模型  代码（C#）： void Start(){   _rotY = target.eulerAngles.y;   _">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-29T05:39:18.135Z">
+<meta property="og:updated_time" content="2018-03-29T07:02:19.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="简易3d游戏制作笔记_01">
 <meta name="twitter:description" content="摄像机环绕角色进行旋转基本实现思路 获得摄像机和角色模型的初始Transform偏移值 将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation 通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置 通过代码使摄像机面对模型  代码（C#）： void Start(){   _rotY = target.eulerAngles.y;   _">
@@ -310,7 +310,7 @@
 <pre><code>void Start(){
   _rotY = target.eulerAngles.y;
   _offset = target.position-transform.position;
-  //target为摄像机的Transform
+  //target为角色模型的Transform
 }
 
 void LateUpdate(){
@@ -367,6 +367,10 @@ void LateUpdate(){
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/29/简易3d游戏制作笔记-02/" rel="prev" title="简易3d游戏制作笔记_02">
+                简易3d游戏制作笔记_02 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -443,7 +447,7 @@ void LateUpdate(){
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -229,6 +229,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/01/简易3d游戏制作笔记-04/" itemprop="url">简易3d游戏制作笔记_04</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T14:09:54+08:00">
+                2018-04-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="修改地面检测处理边缘和斜坡"><a href="#修改地面检测处理边缘和斜坡" class="headerlink" title="修改地面检测处理边缘和斜坡"></a>修改地面检测处理边缘和斜坡</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li><p>改用光线投射检测代替碰撞器的isGrounded检测</p>
+</li>
+<li><p>当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&gt;check）,并且此时isGrounded为true，则说明角色位于边缘。此时如果角色的movement向量和碰撞点的法向量方向相同，则movement+=normal<em>speed，否则movement = normal</em>speed</p>
+</li>
+</ul>
+<p>代码(C#)</p>
+<pre><code>private ControllerColliderHit _contact;
+//用于储存碰撞数据
+...
+bool hitGround = false;
+RaycastHit hit;
+if(vertSpeed&lt;0&amp;&amp;Physics.RaycastHit(transform.position,Vector3.down,out hit))
+{
+  float check = (charCharacter.height+charCharacter.radius)/1.9f;
+  hitGround = hit.distance&lt;=check;
+}
+
+if(hitGround){
+  if(Input.GetButtonDown(&quot;Jump&quot;))
+  {
+      vertSpeed = jumpSpeed;
+  }
+  else
+  {
+    vertSpeed = minFallSpeed;
+  }
+}
+else
+{
+    vertSpeed += gravity *5 *Time.deltaTime;
+    if(vertSpeed&lt;maxSpeed)
+    {
+        vertSpeed = maxSpeed;
+    }        
+    if(charCharacter.isGround)
+    {
+      if(Vector3.Dot(movement,_contac.normal)&lt;0)
+      {
+        movement = _contact.normal*moveSpeed;
+      }
+      else
+      {
+        movement += _contact.normal.moveSpeed;
+      }
+    }
+}
+...
+
+void OnControllerColliderHit(ControllerColliderHit hit)
+{
+  _contact = hit;
+}
+
+
+//RaycastHit hit;
+//Physics.RaycastHit(光线发射的positon，发射方向，out hit);
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1020,7 +1196,7 @@ void LateUpdate(){
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">6</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

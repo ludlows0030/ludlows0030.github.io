@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="摄像机环绕角色进行旋转基本实现思路 获得摄像机和角色模型的初始Transform偏移值 将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation 通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置 通过代码使摄像机面对模型  代码（C#）： void Start(){   _rotY = target.eulerAngles.y;   _">
+<meta name="description" content="把物品储存在集合字典中基本实现思路 在InventoryManager中添加两个方法  private Dictionary&amp;lt;string, int&amp;gt; _items;  private void DisplayItems(){   string itemDisplay = &amp;quot;Items: &amp;quot;;   foreach(KeyValuePair&amp;lt;string,int">
 <meta name="keywords" content="Unity">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简易3d游戏制作笔记_01">
-<meta property="og:url" content="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/index.html">
+<meta property="og:title" content="简易3d游戏制作笔记-08">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/index.html">
 <meta property="og:site_name" content="Ludlows&#39; Blog">
-<meta property="og:description" content="摄像机环绕角色进行旋转基本实现思路 获得摄像机和角色模型的初始Transform偏移值 将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation 通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置 通过代码使摄像机面对模型  代码（C#）： void Start(){   _rotY = target.eulerAngles.y;   _">
+<meta property="og:description" content="把物品储存在集合字典中基本实现思路 在InventoryManager中添加两个方法  private Dictionary&amp;lt;string, int&amp;gt; _items;  private void DisplayItems(){   string itemDisplay = &amp;quot;Items: &amp;quot;;   foreach(KeyValuePair&amp;lt;string,int">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-29T07:02:19.735Z">
+<meta property="og:updated_time" content="2018-04-13T11:25:27.159Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简易3d游戏制作笔记_01">
-<meta name="twitter:description" content="摄像机环绕角色进行旋转基本实现思路 获得摄像机和角色模型的初始Transform偏移值 将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation 通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置 通过代码使摄像机面对模型  代码（C#）： void Start(){   _rotY = target.eulerAngles.y;   _">
+<meta name="twitter:title" content="简易3d游戏制作笔记-08">
+<meta name="twitter:description" content="把物品储存在集合字典中基本实现思路 在InventoryManager中添加两个方法  private Dictionary&amp;lt;string, int&amp;gt; _items;  private void DisplayItems(){   string itemDisplay = &amp;quot;Items: &amp;quot;;   foreach(KeyValuePair&amp;lt;string,int">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/"/>
 
 
 
 
 
-  <title>简易3d游戏制作笔记_01 | Ludlows' Blog</title>
+  <title>简易3d游戏制作笔记-08 | Ludlows' Blog</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang Li">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">简易3d游戏制作笔记_01</h1>
+          <h1 class="post-title" itemprop="name headline">简易3d游戏制作笔记-08</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T13:23:14+08:00">
-                2018-03-29
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T15:21:52+08:00">
+                2018-04-12
               </time>
             
 
@@ -300,33 +300,44 @@
       
 
       
-        <h1 id="摄像机环绕角色进行旋转"><a href="#摄像机环绕角色进行旋转" class="headerlink" title="摄像机环绕角色进行旋转"></a>摄像机环绕角色进行旋转</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ol>
-<li>获得摄像机和角色模型的初始Transform偏移值</li>
-<li>将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation</li>
-<li>通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置</li>
-<li>通过代码使摄像机面对模型</li>
-</ol>
-<p>代码（C#）：</p>
-<pre><code>void Start(){
-  _rotY = target.eulerAngles.y;
-  _offset = target.position-transform.position;
-  //target为角色模型的Transform
+        <h1 id="把物品储存在集合字典中"><a href="#把物品储存在集合字典中" class="headerlink" title="把物品储存在集合字典中"></a>把物品储存在集合字典中</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>在InventoryManager中添加两个方法</li>
+</ul>
+<pre><code>private Dictionary&lt;string, int&gt; _items;
+
+private void DisplayItems(){
+  string itemDisplay = &quot;Items: &quot;;
+  foreach(KeyValuePair&lt;string,int&gt; item in _items){
+    itemDisplay +=item.Key +&quot;(&quot;+item.Value+&quot;)&quot;;
+  }
+  Debug.Log(itemDisplay);
 }
 
-void LateUpdate(){
-  float horInput = Input.GetAxis(&quot;Horizontal&quot;)
-  if(horInput!=0){
-    _rotY += horInput*rotSpeed;
+public void AddItem(string name){
+  if(_items.ContainsKey(name)){
+    _items[name]+=1;
   }
   else{
-          _rotY += GetAxis(&quot;Mouse X&quot;)*rotSpeed*3
-          //鼠标的水平移动比键盘的更灵敏一些
+    _item[name] =1
   }
-  Quaternion rotation = Quaternion.Euler(0,_rotY,0);
-  //将欧拉角转化为四元数
-  transform.position = target.position-(_offset*rotation);
-  //Vector3乘以一个四元数得到旋转后的Vector3
-  transform.LookAt(target);
+
+  DisplayItems();
+}
+</code></pre><ul>
+<li>再添加数据访问的方法到InventoryManager中</li>
+</ul>
+<pre><code>public List&lt;string&gt; GetItemList(){
+  //返回储存的物品名称的列表
+  List&lt;string&gt; list = new List&lt;string&gt;(_items.Keys);
+  return list;
+}
+
+public int GetItemCount(string name){
+  //检测列表中是否有Key为name的物品并返回物品的数量
+  if(_items.ContainsKey(name)){
+    return _items[name];
+  }
+  return 0;
 }
 </code></pre>
       
@@ -358,8 +369,8 @@ void LateUpdate(){
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/29/简单3d游戏制作笔记-00/" rel="next" title="简单3d游戏制作笔记_00">
-                <i class="fa fa-chevron-left"></i> 简单3d游戏制作笔记_00
+              <a href="/2018/04/12/简易3d游戏制作笔记-07/" rel="next" title="简易3d游戏制作笔记-07">
+                <i class="fa fa-chevron-left"></i> 简易3d游戏制作笔记-07
               </a>
             
           </div>
@@ -367,10 +378,6 @@ void LateUpdate(){
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/03/29/简易3d游戏制作笔记-02/" rel="prev" title="简易3d游戏制作笔记_02">
-                简易3d游戏制作笔记_02 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -493,7 +500,7 @@ void LateUpdate(){
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#摄像机环绕角色进行旋转"><span class="nav-number">1.</span> <span class="nav-text">摄像机环绕角色进行旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本实现思路</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#把物品储存在集合字典中"><span class="nav-number">1.</span> <span class="nav-text">把物品储存在集合字典中</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本实现思路</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -229,6 +229,288 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/26/算法（第4版）公开课编程题1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/26/算法（第4版）公开课编程题1/" itemprop="url">算法（第4版）公开课编程题1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-26T13:27:54+08:00">
+                2018-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="算法（第四版）公开课编程题1"><a href="#算法（第四版）公开课编程题1" class="headerlink" title="算法（第四版）公开课编程题1"></a>算法（第四版）公开课编程题1</h1><h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a><a href="http://coursera.cs.princeton.edu/algs4/assignments/percolation.html" title="Coursera" target="_blank" rel="noopener">题目要求</a></h2><h3 id="Percolation-Java"><a href="#Percolation-Java" class="headerlink" title="Percolation.Java"></a>Percolation.Java</h3><pre><code>import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdOut;
+public class Percolation {
+    private boolean[] opened; //所有结点是否开放的布尔值数组
+    private int n; // n*n大小的grid
+    WeightedQuickUnionUF uf;
+
+    public Percolation(int n){
+        this.n = n; //储存传入的参数n
+        uf = new WeightedQuickUnionUF(n*n+2); //利用并查集的类建立n*n+2大小的序列，第一位id为0，最后一位id为n*n-1
+
+        //模拟开始时，出第一个点和最后一个点（两个虚拟点位）默认为开放，其余的都默认为关闭
+        opened = new boolean[n*n+2];
+        for(int i=1;i&lt;n*n+1;i++){
+            opened[i] = false;
+        }
+        opened[0] = true;
+        opened[n*n+1] = true;
+    }
+
+    //将传入的二维定位（行、列）转化为一维的id
+    private int index(int row, int col){  
+        //当传入的行数为0时，返回第一个虚拟点位的id
+        if(row==0){
+            return 0;
+        }
+        //当传入行数为n+1时，返回最后一个点（虚拟点位）的id
+        else if(row==n+1){
+            return n*n+1;
+        }
+        //其余情况通过计算返回id
+        else{
+            int p = (row-1)*n+col;
+            return p;            
+        }                  
+    }
+
+    //使传入坐标点开放
+    public void open(int row, int col){
+        int p = index(row,col);
+        opened[p] = true;
+        //检查该点上下左右是否开放，如果开放则将两者连接
+        boolean up = isOpen(row-1,col);
+        boolean right = isOpen(row,col+1);
+        boolean left = isOpen(row,col-1);
+        boolean down = isOpen(row+1,col);
+        if(up) uf.union(p,index(row-1,col));
+        if(right) uf.union(p,index(row,col+1));    
+        if(left) uf.union(p,index(row,col-1));
+        if(down) uf.union(p,index(row+1,col));
+    }
+    //检查传入坐标的点是否开放
+    public boolean isOpen(int row,int col){
+        //当传入行数为0的时候，返回第一个虚拟点位的开放性
+        if(row==0){
+            return opened[0];
+        }
+        //当传入行数为n+1时，返回第二个虚拟点位（位于最后）的开放性
+        else if(row==n+1){
+            return opened[n*n+1];
+        }
+        //当行数超出边界时，返回fasle
+        else if(row&lt;0||col&lt;=0||row&gt;n+1||col&gt;n){
+            return false;
+        }
+        //其余情况通过计算p
+        else{
+            int p = index(row,col);
+            return opened[p];            
+        }
+    }
+
+    public boolean isFull(int row,int col){
+        int p = index(row,col);
+        return !opened[p];
+    }
+    //当前开放的点在系统中的占比
+    public int numberOfOpenSites(){
+        int openNum = 0;
+        for(int i=1;i&lt;n*n+1;i++){
+            if(opened[i]){
+                openNum++;
+            }
+        }
+        return openNum;
+    }
+    //该系统是否渗透
+    public boolean percolates(){
+        return uf.connected(0,n*n+1);
+    }
+    //如果系统不渗透，持续随机打开系统中的点，直到系统渗透为止
+    public void doPercolation(int n){
+        while(!percolates()){
+            int row = StdRandom.uniform(n)+1;
+            int col = StdRandom.uniform(n)+1;
+            open(row,col);
+        }
+    }
+
+    public static void main(String[] args){
+        int n = StdRandom.uniform(10);
+        Percolation percolation = new Percolation(n);
+        while(!percolation.percolates()){
+            int row = StdRandom.uniform(n)+1;
+            int col = StdRandom.uniform(n)+1;
+            percolation.open(row,col);
+        }
+        StdOut.println(&quot;system is percolate&quot;);    
+    }
+}
+</code></pre><h3 id="PercolationStats-Java"><a href="#PercolationStats-Java" class="headerlink" title="PercolationStats.Java"></a>PercolationStats.Java</h3><pre><code>import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdStats;
+
+public class PercolationStats {
+    private double[] thresholdArray;//保存几次测试渗透系统阈值的数组
+    private int t = 0;
+
+    public PercolationStats(int n,int trials){
+        t = trials;//测试次数
+        thresholdArray = new double[t];
+        //进行测试
+        while(trials&gt;0){
+            Percolation percolation = new Percolation(n);
+            percolation.doPercolation(n);
+            double openNum = percolation.numberOfOpenSites();
+            double sum = n*n;
+            double threshold = openNum/sum;
+            thresholdArray[trials-1] = threshold;
+            trials--;
+        }
+
+    }
+
+    //计算平均值
+    public double mean(){
+        return StdStats.mean(thresholdArray);
+    }
+
+    //计算标准差
+    public double stddev(){
+        return StdStats.stddev(thresholdArray);
+    }
+    //计算置信区间下限
+    public double confidenceLo(){
+        return mean()-(1.96*stddev()/Math.sqrt(t));
+    }
+    //计算置信区间上限
+    public double confidenceHi(){
+        return mean()+(1.96*stddev()/Math.sqrt(t));
+    }
+    //从命令行接收两个数字，（系统大小和测试次数），打印数据
+    public static void main(String[] args){
+        int n;
+        int trials;
+        n = Integer.parseInt(args[0]);
+        trials = Integer.parseInt(args[1]);
+        PercolationStats percolationStats = new PercolationStats(n,trials);
+        StdOut.println(&quot;mean = &quot;+percolationStats.mean());
+        StdOut.println(&quot;stddev = &quot;+percolationStats.stddev());
+        StdOut.println(&quot;95% confidece interval = [&quot;+percolationStats.confidenceLo()+&quot;,&quot;+percolationStats.confidenceHi()+&quot;];&quot;);
+    }   
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1624,182 +1906,6 @@ while (time spent this frame)&lt;targetFrameTime
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ludlows' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/01/简易3d游戏制作笔记-04/" itemprop="url">简易3d游戏制作笔记_04</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T14:09:54+08:00">
-                2018-04-01
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="修改地面检测处理边缘和斜坡"><a href="#修改地面检测处理边缘和斜坡" class="headerlink" title="修改地面检测处理边缘和斜坡"></a>修改地面检测处理边缘和斜坡</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
-<li><p>改用光线投射检测代替碰撞器的isGrounded检测</p>
-</li>
-<li><p>当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&gt;check）,并且此时isGrounded为true，则说明角色位于边缘。此时如果角色的movement向量和碰撞点的法向量方向相同，则movement+=normal<em>speed，否则movement = normal</em>speed</p>
-</li>
-</ul>
-<p>代码(C#)</p>
-<pre><code>private ControllerColliderHit _contact;
-//用于储存碰撞数据
-...
-bool hitGround = false;
-RaycastHit hit;
-if(vertSpeed&lt;0&amp;&amp;Physics.RaycastHit(transform.position,Vector3.down,out hit))
-{
-  float check = (charCharacter.height+charCharacter.radius)/1.9f;
-  hitGround = hit.distance&lt;=check;
-}
-
-if(hitGround){
-  if(Input.GetButtonDown(&quot;Jump&quot;))
-  {
-      vertSpeed = jumpSpeed;
-  }
-  else
-  {
-    vertSpeed = minFallSpeed;
-  }
-}
-else
-{
-    vertSpeed += gravity *5 *Time.deltaTime;
-    if(vertSpeed&lt;maxSpeed)
-    {
-        vertSpeed = maxSpeed;
-    }        
-    if(charCharacter.isGround)
-    {
-      if(Vector3.Dot(movement,_contac.normal)&lt;0)
-      {
-        movement = _contact.normal*moveSpeed;
-      }
-      else
-      {
-        movement += _contact.normal.moveSpeed;
-      }
-    }
-}
-...
-
-void OnControllerColliderHit(ControllerColliderHit hit)
-{
-  _contact = hit;
-}
-
-
-//RaycastHit hit;
-//Physics.RaycastHit(光线发射的positon，发射方向，out hit);
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1850,7 +1956,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1863,7 +1969,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
               
               <div class="site-state-item site-state-tags">
                 
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">标签</span>
                 
               </div>

@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Unity," />
+  <meta name="keywords" content="算法（第4版）," />
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="修改地面检测处理边缘和斜坡基本实现思路 改用光线投射检测代替碰撞器的isGrounded检测  当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&amp;gt;check）,并且此时isGro">
-<meta name="keywords" content="Unity">
+<meta name="description" content="JAVA迭代器集合数据类型的基本操作之一就是，能够使用JAVA的foreach语句通过迭代遍历并处理集合中的每个元素。并且不依赖于集合数据类型的具体实现。如： Stack&amp;lt;String&amp;gt; collection = new Stack&amp;lt;String&amp;gt;(); ... for(String s : collection)   StdOut.println(s); ... 等同于：">
+<meta name="keywords" content="算法（第4版）">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简易3d游戏制作笔记_04">
-<meta property="og:url" content="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/index.html">
+<meta property="og:title" content="JAVA迭代器">
+<meta property="og:url" content="http://yoursite.com/2018/04/27/JAVA迭代器/index.html">
 <meta property="og:site_name" content="Ludlows&#39; Blog">
-<meta property="og:description" content="修改地面检测处理边缘和斜坡基本实现思路 改用光线投射检测代替碰撞器的isGrounded检测  当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&amp;gt;check）,并且此时isGro">
+<meta property="og:description" content="JAVA迭代器集合数据类型的基本操作之一就是，能够使用JAVA的foreach语句通过迭代遍历并处理集合中的每个元素。并且不依赖于集合数据类型的具体实现。如： Stack&amp;lt;String&amp;gt; collection = new Stack&amp;lt;String&amp;gt;(); ... for(String s : collection)   StdOut.println(s); ... 等同于：">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-01T06:27:38.119Z">
+<meta property="og:updated_time" content="2018-04-27T07:50:44.820Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="简易3d游戏制作笔记_04">
-<meta name="twitter:description" content="修改地面检测处理边缘和斜坡基本实现思路 改用光线投射检测代替碰撞器的isGrounded检测  当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&amp;gt;check）,并且此时isGro">
+<meta name="twitter:title" content="JAVA迭代器">
+<meta name="twitter:description" content="JAVA迭代器集合数据类型的基本操作之一就是，能够使用JAVA的foreach语句通过迭代遍历并处理集合中的每个元素。并且不依赖于集合数据类型的具体实现。如： Stack&amp;lt;String&amp;gt; collection = new Stack&amp;lt;String&amp;gt;(); ... for(String s : collection)   StdOut.println(s); ... 等同于：">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/04/27/JAVA迭代器/"/>
 
 
 
 
 
-  <title>简易3d游戏制作笔记_04 | Ludlows' Blog</title>
+  <title>JAVA迭代器 | Ludlows' Blog</title>
   
 
 
@@ -233,7 +233,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/27/JAVA迭代器/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Yang Li">
@@ -250,7 +250,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">简易3d游戏制作笔记_04</h1>
+          <h1 class="post-title" itemprop="name headline">JAVA迭代器</h1>
         
 
         <div class="post-meta">
@@ -262,8 +262,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-01T14:09:54+08:00">
-                2018-04-01
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-27T15:26:29+08:00">
+                2018-04-27
               </time>
             
 
@@ -300,63 +300,48 @@
       
 
       
-        <h1 id="修改地面检测处理边缘和斜坡"><a href="#修改地面检测处理边缘和斜坡" class="headerlink" title="修改地面检测处理边缘和斜坡"></a>修改地面检测处理边缘和斜坡</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
-<li><p>改用光线投射检测代替碰撞器的isGrounded检测</p>
-</li>
-<li><p>当角色模型垂直速度小于0，并且向下的光线投射碰到物体（几乎是所有情况下），如果hit.distance小于一个临界值（check），则判定角色模型位于地面上。此时和前面isGrounded为true时做相同处理。如果判定角色模型不在地面上（hit.distance&gt;check）,并且此时isGrounded为true，则说明角色位于边缘。此时如果角色的movement向量和碰撞点的法向量方向相同，则movement+=normal<em>speed，否则movement = normal</em>speed</p>
-</li>
+        <h1 id="JAVA迭代器"><a href="#JAVA迭代器" class="headerlink" title="JAVA迭代器"></a>JAVA迭代器</h1><p>集合数据类型的基本操作之一就是，能够使用JAVA的foreach语句通过<em>迭代</em>遍历并处理集合中的每个元素。并且不依赖于集合数据类型的具体实现。<br>如：</p>
+<pre><code>Stack&lt;String&gt; collection = new Stack&lt;String&gt;();
+...
+for(String s : collection)
+  StdOut.println(s);
+...
+</code></pre><p>等同于：</p>
+<pre><code>Iterator&lt;String&gt; i = collection.iterator();
+while(i.hasNext()){
+  String s = i.next();
+  StdOut.println(s);
+}
+</code></pre><p>所以 任意可迭代的集合数据类型中 都需要实现：</p>
+<ul>
+<li>集合数据类型必须实现一个iterator（）方法并返回一个Iterator对象；</li>
+<li>Iterator类中必须包含两个方法hasNext()（返回一个布尔值）和next()（返回集合的数据类型）</li>
 </ul>
-<p>代码(C#)</p>
-<pre><code>private ControllerColliderHit _contact;
-//用于储存碰撞数据
-...
-bool hitGround = false;
-RaycastHit hit;
-if(vertSpeed&lt;0&amp;&amp;Physics.RaycastHit(transform.position,Vector3.down,out hit))
+<p>在JAVA中，使用接口机制来指定一个类所必须实现的方法。要使一个类可迭代，第一步就是在它的声明中加入implements Iterable<item>,即:</item></p>
+<pre><code>public interface Iterable&lt;Item&gt;{
+  Iterator&lt;Item&gt; iterator();
+}
+</code></pre><p>然后就可以在类中添加一个iterator方法，并返回一个迭代器Iterator<item>。如：</item></p>
+<pre><code>public Iterator&lt;Item&gt; iterator(){
+  return new ReverseArrayIterator();//迭代器的名字根据需求起
+}
+</code></pre><h2 id="迭代器是什么？"><a href="#迭代器是什么？" class="headerlink" title="迭代器是什么？"></a>迭代器是什么？</h2><p>迭代器是一个实现了hasNext()和next()方法的类的对象，由以下的接口定义：</p>
+<pre><code>public interface Iterator&lt;Item&gt;
 {
-  float check = (charCharacter.height+charCharacter.radius)/1.9f;
-  hitGround = hit.distance&lt;=check;
+  boolean hasNext();
+  Item next();
 }
-
-if(hitGround){
-  if(Input.GetButtonDown(&quot;Jump&quot;))
-  {
-      vertSpeed = jumpSpeed;
-  }
-  else
-  {
-    vertSpeed = minFallSpeed;
-  }
-}
-else
+</code></pre><p>然后就可以在一个类中的嵌套类实现这些方法:</p>
+<pre><code>private class ReverseArrayIterator implements Iterator&lt;Item&gt;
 {
-    vertSpeed += gravity *5 *Time.deltaTime;
-    if(vertSpeed&lt;maxSpeed)
-    {
-        vertSpeed = maxSpeed;
-    }        
-    if(charCharacter.isGround)
-    {
-      if(Vector3.Dot(movement,_contac.normal)&lt;0)
-      {
-        movement = _contact.normal*moveSpeed;
-      }
-      else
-      {
-        movement += _contact.normal.moveSpeed;
-      }
-    }
+  private i = N;
+
+  public boolean hasNext(){return i&gt;0;}
+  public Item next(){return a[--i]}
 }
-...
-
-void OnControllerColliderHit(ControllerColliderHit hit)
-{
-  _contact = hit;
-}
-
-
-//RaycastHit hit;
-//Physics.RaycastHit(光线发射的positon，发射方向，out hit);
+</code></pre><p>此处需要注意的是，嵌套类可以访问包含它的类的实例变量，在这里就是a[]和N。</p>
+<p>最后还有一个非常重要的细节，需要在程序的开头加上：</p>
+<pre><code>import java.util.Iterator;
 </code></pre>
       
     </div>
@@ -374,7 +359,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
       
         <div class="post-tags">
           
-            <a href="/tags/Unity/" rel="tag"># Unity</a>
+            <a href="/tags/算法（第4版）/" rel="tag"># 算法（第4版）</a>
           
         </div>
       
@@ -387,8 +372,8 @@ void OnControllerColliderHit(ControllerColliderHit hit)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/03/30/简易3d游戏制作笔记-03/" rel="next" title="简易3d游戏制作笔记_03">
-                <i class="fa fa-chevron-left"></i> 简易3d游戏制作笔记_03
+              <a href="/2018/04/26/算法（第四版）公开课笔记-单向链表/" rel="next" title="算法（第4版）公开课笔记-单向链表">
+                <i class="fa fa-chevron-left"></i> 算法（第4版）公开课笔记-单向链表
               </a>
             
           </div>
@@ -396,10 +381,6 @@ void OnControllerColliderHit(ControllerColliderHit hit)
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/04/01/游戏编程算法与技巧习题01/" rel="prev" title="游戏编程算法与技巧习题01">
-                游戏编程算法与技巧习题01 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -522,7 +503,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#修改地面检测处理边缘和斜坡"><span class="nav-number">1.</span> <span class="nav-text">修改地面检测处理边缘和斜坡</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#基本实现思路"><span class="nav-number">1.1.</span> <span class="nav-text">基本实现思路</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JAVA迭代器"><span class="nav-number">1.</span> <span class="nav-text">JAVA迭代器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#迭代器是什么？"><span class="nav-number">1.1.</span> <span class="nav-text">迭代器是什么？</span></a></li></ol></li></ol></div>
             
 
           </div>

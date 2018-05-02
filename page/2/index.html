@@ -229,6 +229,136 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-06/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/12/简易3d游戏制作笔记-06/" itemprop="url">简易3d游戏制作笔记-06</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T13:06:30+08:00">
+                2018-04-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="通过Collider-SendMessage向周围的GameObject尝试调用指定的函数"><a href="#通过Collider-SendMessage向周围的GameObject尝试调用指定的函数" class="headerlink" title="通过Collider.SendMessage向周围的GameObject尝试调用指定的函数"></a>通过Collider.SendMessage向周围的GameObject尝试调用指定的函数</h1><h2 id="以玩家在游戏中通过按键控制门的开关为例"><a href="#以玩家在游戏中通过按键控制门的开关为例" class="headerlink" title="以玩家在游戏中通过按键控制门的开关为例"></a>以玩家在游戏中通过按键控制门的开关为例</h2><pre><code>if(Input.GetButtonDown(&quot;Fire3&quot;))
+{
+  //检测到按键后，以transform.position为球心，以radius为半径，检测周围的碰撞器，并储存在Collider[]中
+  Collider[] hitColliders = Physics.OverlapSphere(transform.position,radius);
+}
+
+foreach(Collider hitCollider in hitColliders)
+{
+  //遍历hitColliders中的所有元素，并通过SendMessage()方法，尝试调用Operate()方法，并在元素不包含此方法时不报错
+  hitCollider.SendMessage(&quot;Operate&quot;,SendMessageOptions.DontRequireReceiver);
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-05/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1604,7 +1734,7 @@ void LateUpdate(){
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">20</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

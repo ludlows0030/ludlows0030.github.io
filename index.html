@@ -229,6 +229,369 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/04/算法（第4版）公开课编程题2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/04/算法（第4版）公开课编程题2/" itemprop="url">算法（第4版）公开课编程题2</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-04T16:04:05+08:00">
+                2018-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="算法（第四版）公开课编程题2"><a href="#算法（第四版）公开课编程题2" class="headerlink" title="算法（第四版）公开课编程题2"></a>算法（第四版）公开课编程题2</h1><h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a><a href="http://coursera.cs.princeton.edu/algs4/assignments/queues.html" title="Coursera" target="_blank" rel="noopener">题目要求</a></h2><h3 id="Deque-Java"><a href="#Deque-Java" class="headerlink" title="Deque.Java"></a>Deque.Java</h3><pre><code>import edu.princeton.cs.algs4.LinkedStack;
+import java.util.Iterator;
+import edu.princeton.cs.algs4.StdOut;
+public class Deque&lt;Item&gt; implements Iterable&lt;Item&gt;{
+  private LinkedStack&lt;Item&gt; headStack;
+  private LinkedStack&lt;Item&gt; endStack;  
+  //维护两个栈一个负责头部的加入和移除一个负责尾部的
+
+  public Deque(){
+      headStack = new LinkedStack&lt;Item&gt;();
+      endStack = new LinkedStack&lt;Item&gt;();
+  }
+
+  public boolean isEmpty(){
+      return headStack.isEmpty()&amp;&amp;endStack.isEmpty();
+      //如果两个栈都为空的话则整个栈为空
+  }
+
+  public int size(){
+      return headStack.size()+endStack.size();
+      //两个栈的size相加等于整个栈
+  }
+
+  public void addFirst(Item item){
+      if(item != null){
+          headStack.push(item);
+      }
+      else{
+          throw new java.lang.IllegalArgumentException();
+      }
+      //在栈的最前端加入元素等于在头部栈的栈顶加入元素，头部栈的栈顶是整个栈的最前端，尾部栈的栈顶是整个栈的最末端
+  }
+
+  public void addLast(Item item){
+      if(item != null){
+           endStack.push(item);
+      }
+      else{
+          throw new java.lang.IllegalArgumentException();
+      }       
+  }
+
+  public Item removeFirst(){
+      if(!isEmpty()){                    
+        //如果头部栈为空的话，要移除第一个元素，需要将尾部栈的元素倒序复制到头部栈
+          if(headStack.isEmpty()){
+              while(!endStack.isEmpty()){
+                  headStack.push(endStack.pop());
+              }
+          }
+          return headStack.pop();
+      }
+      else throw new java.util.NoSuchElementException();
+
+  }
+
+  public Item removeLast(){
+      if(!isEmpty()){         
+        //如果尾部栈为空的话，要移除最后一个元素，需要将头部栈的元素倒序复制到尾部栈           
+          if(endStack.isEmpty()){
+              while(!headStack.isEmpty()){
+                  endStack.push(headStack.pop());
+              }
+          }
+          return headStack.pop();
+      }
+      else throw new java.util.NoSuchElementException();        
+  }
+
+  public Iterator&lt;Item&gt; iterator(){
+      return new DequeIterator();
+  }
+
+  private class DequeIterator implements Iterator&lt;Item&gt;{
+      private int i = size();
+
+      Iterator&lt;Item&gt; head = headStack.iterator();
+      Iterator&lt;Item&gt; end = endStack.iterator();
+
+      public boolean hasNext(){return i&gt;0;}
+      public Item next(){
+          if(!hasNext()){throw new java.util.NoSuchElementException();}
+          if(!headStack.isEmpty()){
+              i--;
+              return head.next();
+          }
+          else if (headStack.isEmpty()){
+              while(!endStack.isEmpty()){
+                  headStack.push(endStack.pop());
+              }
+              i--;
+              return head.next();
+          }  
+          else throw new java.util.NoSuchElementException();
+      }
+      public void remove(){
+          throw new java.lang.UnsupportedOperationException();
+      }
+  }
+  //测试函数
+  public static void main(String[] args){
+      Deque&lt;Integer&gt; dq = new Deque&lt;Integer&gt;();
+      dq.addFirst(1);
+      dq.addLast(2);
+      dq.addFirst(4);
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.size());
+  }
+}
+</code></pre><h2 id="RandomizedQueue-java"><a href="#RandomizedQueue-java" class="headerlink" title="RandomizedQueue.java"></a>RandomizedQueue.java</h2><pre><code>import java.util.Iterator;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdOut;
+public class RandomizedQueue&lt;T&gt; implements Iterable&lt;T&gt;{
+
+  private T[] s;//用数组实现队列
+  private int N;//当前数组中元素个数
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public RandomizedQueue(){
+    s = (T[])new Comparable&lt;?&gt;[1];
+    N = 0;
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private void resize(int capacity){
+    //数组大小重置为capacity
+    T[] copy = (T[])new Comparable&lt;?&gt;[capacity];
+    for(int i = 0;i&lt;N;i++){
+        copy[i]=s[i];
+    }
+    s = copy;
+  }    
+
+  public boolean isEmpty(){
+    return N == 0;
+  }
+
+  public int size(){
+    return N;
+  }
+
+  public void enqueue(T item){
+    if(item ==null){
+        throw new java.lang.IllegalArgumentException();
+    }
+    if(N == s.length){
+      //如果数组满了，更改数组大小为当前两倍
+        resize(2*s.length);
+    }
+    s[N++] = item;      
+  }
+
+  public T dequeue(){
+    if(isEmpty()){
+        throw new java.util.NoSuchElementException();
+    }        
+    int index = StdRandom.uniform(N);
+    T temp = s[index];
+    s[index] = s[N-1];
+    s[N-1] = temp;
+    //交换随机索引和最后一个索引对应的值
+    T item = s[--N];
+    s[N] = null;
+    if(N&gt;0&amp;&amp;N&lt;s.length/4){
+      //如果数组不满1/4，更改数组大小为当前的1/2
+        resize(s.length/2);
+    }
+    return item;
+  }
+
+  public T sample(){
+    int index = StdRandom.uniform(N);
+    return s[index];
+  }
+
+  public Iterator&lt;T&gt; iterator(){
+    return new RandomIterator();
+  }
+
+  private class RandomIterator implements Iterator&lt;T&gt;{
+    private int num =N;     
+
+    public boolean hasNext(){
+        return N==0;
+    }
+
+    public T next(){
+        if(num&gt;0){
+            int index = StdRandom.uniform(num--);
+            T temp = s[index];
+            s[index] = s[num];
+            s[num]= temp;
+            return temp;      
+        }
+        else{
+            throw new java.util.NoSuchElementException();
+        }
+    }
+
+    public void remove(){
+        throw new java.lang.UnsupportedOperationException();
+    }
+  }
+
+  public static void main(String[] args){
+    RandomizedQueue&lt;Integer&gt; rq = new RandomizedQueue&lt;Integer&gt;();
+    rq.enqueue(1);
+    rq.enqueue(45);
+    rq.enqueue(23);
+    rq.enqueue(23214);
+    rq.enqueue(43);
+    rq.enqueue(123);
+    rq.enqueue(435);
+    rq.enqueue(234);
+    /*
+    StdOut.println(rq.sample());
+    StdOut.println(rq.dequeue());
+    */
+    Iterator&lt;Integer&gt; i = rq.iterator();
+    while(!i.hasNext()){
+        int s = i.next();
+        StdOut.println(s);
+    }
+  }
+}
+</code></pre><h2 id="Permutation-java"><a href="#Permutation-java" class="headerlink" title="Permutation.java"></a>Permutation.java</h2><pre><code>import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdIn;
+public class Permutation {
+  public static void main(String[] args){
+      RandomizedQueue&lt;String&gt; rq = new RandomizedQueue&lt;String&gt;();
+      int k = Integer.parseInt(args[0]);//从命令行接收参数
+      while(!StdIn.isEmpty()){
+          String str = StdIn.readString();//从标准输入流中接收字节
+          rq.enqueue(str);
+      }
+      for(int i = 0;i&lt;k;i++){
+          if(!rq.isEmpty()){          
+               StdOut.println(rq.dequeue());
+          }
+      }
+  }
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/02/可以返回最大值的栈/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1765,253 +2128,11 @@ public int GetItemCount(string name){
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-07/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ludlows' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/12/简易3d游戏制作笔记-07/" itemprop="url">简易3d游戏制作笔记-07</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-12T13:17:42+08:00">
-                2018-04-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="管理仓库数据和游戏状态（MVC设计模式）"><a href="#管理仓库数据和游戏状态（MVC设计模式）" class="headerlink" title="管理仓库数据和游戏状态（MVC设计模式）"></a>管理仓库数据和游戏状态（MVC设计模式）</h1><h2 id="基本设计思路"><a href="#基本设计思路" class="headerlink" title="基本设计思路"></a>基本设计思路</h2><ul>
-<li>使用PlayerManager维护玩家状态</li>
-<li>使用InventoryManager维护玩家的物品清单</li>
-<li>使用Managers来统一管理所有的Manager(如PlayerManager,InventoryManager)</li>
-<li>为了让Managers(主管理器)以一种一致的方式来引用其他模块，这些模块必须从一个基类继承共同的属性，将这个共同的基类定义为一个接口</li>
-</ul>
-<h2 id="具体代码设计"><a href="#具体代码设计" class="headerlink" title="具体代码设计"></a>具体代码设计</h2><ul>
-<li><p>基本的基类接口(IGameManager)</p>
-<pre><code>//通常以I+接口名的格式来命名接口
-public interface IGameManager{
-  ManagerStatus status{get;}
-
-  //各个Manager用来初始化的方法
-  void Startup();
-}
-</code></pre></li>
-<li><p>实现枚举类型ManagerStatus</p>
-<pre><code>public enum ManagerStatus{
-  //管理器所有的可能状态
-  Shutdown,
-  Initializing,
-  Started
-}
-</code></pre></li>
-<li><p>编写InventoryManager脚本</p>
-<pre><code>//实现IGameManager接口
-public class InventoryManager : MonoBehaviour, IGameManager{
-  public ManagerStatus status {get;private set;}
-
-  public void Startup(){
-    //如果是长任务改为.Initializing
-    stauts = ManagerStatus.Started;
-  }
-}
-</code></pre></li>
-<li><p>编写PlayerManager脚本</p>
-<pre><code>public class PlayerManager : MonoBehaviour, IGameManager{
-  public ManagerStatus status{get;private set;}
-
-  public int health {get;private set;}
-  public int maxhealth {get;private set;}
-
-  public void Startup(){
-    health = 50;
-    maxhealth = 100;
-    初始化属性
-
-    status = ManagerStatus.Started;
-  }
-
-  public void ChangeHealth(int value){
-    health += value;
-    if(health&gt;maxhealth){
-      health = maxhealth;
-    }
-    else if(health&lt;0){
-      health = 0;
-    }
-    //在控制台输出
-    Debug.Log(&quot;Health: &quot;+health+&quot;/&quot;+&quot;maxhealth&quot;);
-  }
-}
-</code></pre></li>
-<li><p>编写Managers脚本（主管理器）</p>
-<pre><code>[RequireComponent(typeof(PlayerManager))]
-[RequireComponent(typeof(InventoryManager))]
-
-public class Managers : MonoBehaviour{
-  public static PlayerManager Player{get;private set;}
-  public static InventoryManager Inventory{get;private set;}
-  //声明
-
-  private List&lt;IGameManager&gt; _startSequence;
-  //用于保存Manager的List
-
-  void Awake(){
-    Player = GetComponent&lt;PlayerManager&gt;();
-    Inventory = GetComponent&lt;InventoryManager&gt;();
-
-    _startSequence = new List&lt;IGameManager&gt;();
-    _startSequence.Add(Player);
-    _startSequence.Add(Inventory);
-    //将Manager添加到List中
-
-    StartCoroutine(StartupManagers());
-    //异步启动序列，初始化Manager
-  }
-
-  private IEnumerator StartupManagers(){
-    foreach(IGameManager manager in _startSequence){
-      manager.Startup();
-    }
-
-    yield return null;暂停一下
-
-    int numModules = _startSequence.Count;
-    //需初始化的模块总数
-    int numReady = 0;
-    //初始化完毕的模块数
-
-    whilie(numReady&lt;numModules){
-      int lastReady = numReady;
-      //记录当前初始化完成的模块数
-      numReady = 0;
-
-      foreach(IGameManager manager in _startSequence){
-        if(manager.status == ManagerStatus.Started){
-          //在所有模块初始化完毕之前，如果有模块初始化完毕，则numReady++
-          numReady++
-        }
-      }
-
-      if(numReady&gt;lastReady){
-        //如果初始化完毕的模块数大于当前所记录的初始化完毕的模块数（也就是lastReady的值），就更新
-        Debug.Log(&quot;Process: &quot;+numReady+&quot;/&quot;+numModules);
-        yield retrun null;
-      }
-    }
-    Debug.Log(&quot;All managers started up&quot;);
-  }        
-}
-</code></pre></li>
-</ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2057,7 +2178,7 @@ public class Managers : MonoBehaviour{
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

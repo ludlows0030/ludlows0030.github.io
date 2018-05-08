@@ -229,6 +229,158 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-09/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/简易3d游戏制作笔记-09/" itemprop="url">简易3d游戏制作笔记-09</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T19:27:15+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="装备物品和使用物品"><a href="#装备物品和使用物品" class="headerlink" title="装备物品和使用物品"></a>装备物品和使用物品</h1><p>在InventoryMnager中添加装备物品和使用物品的代码</p>
+<pre><code>public string equippedItem(get; private set;)
+
+public bool EquipItem(string name){
+  //如果物品列表中包含有名为name的物品并且还未被装备
+  if(_items.ContainsKey(name)&amp;&amp;equippedItem!=name){
+    equippedItem = name;
+    return true;
+  }
+
+  equippedItem = null;
+  return false;
+}
+
+public bool ConsumeItem(string name){
+  //如果有此物品则，物品数量--
+  if(_items.ContainsKey(name)){
+    _items[name]--;
+    //如果物品数量为0，则将物品移出字典
+    if(_items[name]==0){
+      _items.Remove(name);
+    }
+  }
+
+
+  //没有物品时则返回false
+  Debug.Log(&quot;cannotconsume&quot;+name);
+  return false
+}
+
+//更新物品列表
+DisplayItems();
+return true;
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1652,153 +1804,6 @@ charController.Move(movement);
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ludlows' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/29/简易3d游戏制作笔记-01/" itemprop="url">简易3d游戏制作笔记_01</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-29T13:23:14+08:00">
-                2018-03-29
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="摄像机环绕角色进行旋转"><a href="#摄像机环绕角色进行旋转" class="headerlink" title="摄像机环绕角色进行旋转"></a>摄像机环绕角色进行旋转</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ol>
-<li>获得摄像机和角色模型的初始Transform偏移值</li>
-<li>将按键和鼠标水平移动得到的水平输入值加到摄像机的旋转的y值上，获得旋转后的摄像机的Rotation</li>
-<li>通过角色模型的位置减去旋转后的偏移值，得到摄像机的当前应该处于的位置</li>
-<li>通过代码使摄像机面对模型</li>
-</ol>
-<p>代码（C#）：</p>
-<pre><code>void Start(){
-  _rotY = target.eulerAngles.y;
-  _offset = target.position-transform.position;
-  //target为角色模型的Transform
-}
-
-void LateUpdate(){
-  float horInput = Input.GetAxis(&quot;Horizontal&quot;)
-  if(horInput!=0){
-    _rotY += horInput*rotSpeed;
-  }
-  else{
-          _rotY += GetAxis(&quot;Mouse X&quot;)*rotSpeed*3
-          //鼠标的水平移动比键盘的更灵敏一些
-  }
-  Quaternion rotation = Quaternion.Euler(0,_rotY,0);
-  //将欧拉角转化为四元数
-  transform.position = target.position-(_offset*rotation);
-  //Vector3乘以一个四元数得到旋转后的Vector3
-  transform.LookAt(target);
-}
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1849,7 +1854,7 @@ void LateUpdate(){
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

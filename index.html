@@ -229,6 +229,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/08/归并排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/08/归并排序/" itemprop="url">归并排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-08T22:29:18+08:00">
+                2018-05-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="归并排序辅助数组只有原数组一半大的归并排序"><a href="#归并排序辅助数组只有原数组一半大的归并排序" class="headerlink" title="归并排序辅助数组只有原数组一半大的归并排序"></a>归并排序辅助数组只有原数组一半大的归并排序</h1><p>归并排序的思想是通过将两个有序的序列合并成一个有序的序列。<br>当left[i]&gt;right[j] origin[k] = right[j]; j++;<br>当一边取完就从另一边取<br>将一个无序的数组通过迭代的方法分至最小，即由一个元素构成的序列进行排序即自顶而下的归并排序</p>
+<pre><code>import edu.princeton.cs.algs4.StdOut;
+public class Merge{
+  private static Comparable[] aux;
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static boolean less(Comparable v, Comparable w){
+    return v.compareTo(w)&lt;0;
+  }
+
+  public static void sort(Comparable[] a){
+    aux = new Comparable[a.length];
+    sort(a,0,a.length-1);
+  }
+
+  private static void sort(Comparable[] a,int lo ,int hi){
+    if(hi&lt;=lo)return;
+    int mid = lo+(hi-lo)/2;
+    sort(a,lo,mid);
+    sort(a,mid+1,hi);
+    merge(a,lo,mid,hi);
+  }
+
+  public static void merge(Comparable[] a,int lo,int mid, int hi){
+    int i = lo,j = mid+1;
+
+    for(int k = lo;k&lt;=hi;k++){
+        aux[k] = a[k];
+    }
+
+    for(int k = lo;k&lt;=hi;k++){
+        if(i&gt;mid) a[k] = a[j++];
+        else if(j&gt;hi) a[k] = aux[i++];
+        else if(less(aux[i],aux[j])) a[k] = aux[i++];
+        else a[k] = aux[j++];
+    }   
+  }
+
+  public static void main(String[] args){
+    Comparable[] a = {2,4,6,8,0,1,3,7};
+    Merge m = new Merge();
+    m.sort(a);
+    for(Comparable c :a){
+        StdOut.println(c);
+    }
+  }
+}
+</code></pre><p>当用只有原数组一半大的辅助数组时，只将原数组的左半复制到辅助数组中</p>
+<pre><code>import edu.princeton.cs.algs4.StdOut;
+public class Merge{
+  private static Comparable[] aux;
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private static boolean less(Comparable v, Comparable w){
+    return v.compareTo(w)&lt;0;
+  }
+
+  public static void sort(Comparable[] a){
+    aux = new Comparable[a.length/2];
+    sort(a,0,a.length-1);
+  }
+
+  private static void sort(Comparable[] a,int lo ,int hi){
+    if(hi&lt;=lo)return;
+    int mid = lo+(hi-lo)/2;
+    merge(a,lo,mid,hi);
+  }
+
+  public static void merge(Comparable[] a,int lo,int mid, int hi){
+    int i = lo,j = mid+1;
+
+    for(int k = lo;k&lt;=mid;k++){
+        aux[k] = a[k];
+    }
+
+    for(int k = lo;k&lt;=hi;k++){
+        if(i&gt;mid) a[k] = a[j++];
+        else if(j&gt;hi) a[k] = aux[i++];
+        else if(less(aux[i],a[j])) a[k] = aux[i++];
+        else a[k] = a[j++];
+    }   
+  }
+
+  public static void main(String[] args){
+    Comparable[] a = {2,4,6,8,0,1,3,7};
+    Merge m = new Merge();
+    m.sort(a);
+    for(Comparable c :a){
+        StdOut.println(c);
+    }
+  }
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/05/07/选择排序、插入排序和希尔排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2020,158 +2231,6 @@ Messenger.RemoveListener(GameEvent.消息名，接收到消息后调用的方法
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-09/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ludlows' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/04/13/简易3d游戏制作笔记-09/" itemprop="url">简易3d游戏制作笔记-09</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T19:27:15+08:00">
-                2018-04-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="装备物品和使用物品"><a href="#装备物品和使用物品" class="headerlink" title="装备物品和使用物品"></a>装备物品和使用物品</h1><p>在InventoryMnager中添加装备物品和使用物品的代码</p>
-<pre><code>public string equippedItem(get; private set;)
-
-public bool EquipItem(string name){
-  //如果物品列表中包含有名为name的物品并且还未被装备
-  if(_items.ContainsKey(name)&amp;&amp;equippedItem!=name){
-    equippedItem = name;
-    return true;
-  }
-
-  equippedItem = null;
-  return false;
-}
-
-public bool ConsumeItem(string name){
-  //如果有此物品则，物品数量--
-  if(_items.ContainsKey(name)){
-    _items[name]--;
-    //如果物品数量为0，则将物品移出字典
-    if(_items[name]==0){
-      _items.Remove(name);
-    }
-  }
-
-
-  //没有物品时则返回false
-  Debug.Log(&quot;cannotconsume&quot;+name);
-  return false
-}
-
-//更新物品列表
-DisplayItems();
-return true;
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2222,7 +2281,7 @@ return true;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

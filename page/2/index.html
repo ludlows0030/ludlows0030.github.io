@@ -229,6 +229,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Yang Li">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ludlows' Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/04/13/简易3d游戏制作笔记-11/" itemprop="url">简易3d游戏制作笔记-11</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-13T20:03:57+08:00">
+                2018-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="保存和读取游戏进度"><a href="#保存和读取游戏进度" class="headerlink" title="保存和读取游戏进度"></a>保存和读取游戏进度</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法</li>
+<li>添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例</li>
+<li>用字典保存游戏信息，并将字典内容序列化在文件流中</li>
+<li>从文件流中反序列化出游戏信息</li>
+</ul>
+<ul>
+<li>DataManager脚本</li>
+</ul>
+<pre><code>public class DataManager : MonoBehaviour, IGameManager {
+  public ManagerStatus status {get;private set;}
+
+  private string _filename;
+
+  private NetworkService _network;
+
+  public void Startup(NetworkService service){
+    _network = service;
+
+    //构建文件保存的路径
+    _filename = Path.Combine(Application.persistentDataPath, &quot;game.dat&quot;);
+
+    status = ManagerStatus.Started;
+  }
+
+  public void SaveGameState(){
+    //将游戏信息保存在字典内
+    Dictionary&lt;string , object&gt;gamestate = new Dictionary&lt;string,object&gt;();
+    gamestate.Add(&quot;inventory&quot;,Managers.Inventory.GetData());
+    gamestate.Add(&quot;health&quot;,Managers.Player.health);
+    gamestate.Add(&quot;maxHealth&quot;,Managers.Player.maxHealth);
+    gamestate.Add(&quot;curLevel&quot;,Managers.Misssion.curLevel);
+    gamestate.Add(&quot;maxLevel&quot;,Managers.Misssion.maxLevel);
+
+    //将字典序列化到文件流中
+    FileStream stream = File.Create(_filename);
+    BinaryFormatter formatter = new BinaryFormatter();
+    formatter.Serialize(stream, gamestate);
+    stream.Close();
+  }
+
+  public void LoadGameState(){
+    if(!File.Exists(_filename)){
+      Debug.Log(&quot;No saved game&quot;);
+      return;
+    }
+
+    Dictionary&lt;string,object&gt; gamestate;
+
+
+    BinaryFormatter formatter = new BinaryFormatter();
+    FileStream stream = File.Open(_filename, FileMode.Open);
+    gamestate = formatter.Deserialize(stram) as Dictionary&lt;string,object&gt;;
+    stream.Close();
+
+    //更新游戏信息
+    Managers.Inventory.UpdateData((Dictionary&lt;string,int&gt;)gamestate[&quot;inventory&quot;]);
+    Managers.Player.UpdateData((int)gamestate[&quot;inventory&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Inventory.UpdateData((int)gamestate[&quot;curLevel&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Misssion.RestartCurrent();
+  }
+}
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-10/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1619,159 +1800,6 @@ void OnControllerColliderHit(ControllerColliderHit hit)
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Yang Li">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ludlows' Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/30/简易3d游戏制作笔记-03/" itemprop="url">简易3d游戏制作笔记_03</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-30T15:09:34+08:00">
-                2018-03-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="实现跳跃动作"><a href="#实现跳跃动作" class="headerlink" title="实现跳跃动作"></a>实现跳跃动作</h1><h2 id="角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力"><a href="#角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力" class="headerlink" title="角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力"></a>角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力</h2><h3 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h3><ul>
-<li><p>进行一系列的判断，来决定角色模型上收到的vertSpeed为多少。</p>
-</li>
-<li><p>如果角色模型在地面上时，若按下“跳跃键”，则vertSpeed为一个向上的跳跃力，否则vertSpeed为一个很小的向下的力（保证模型在凹凸不平的地面上行走时，被按在地上）。</p>
-</li>
-<li><p>当角色模型不在地面上时，vertSpeed+=重力乘以一个系数，并且当vertSpeed大于设定的下落的最大速度时，使其等于该速度。从而避免vertSpeed过大</p>
-</li>
-</ul>
-<p>代码（C#）</p>
-<pre><code>void Update(){
-  float vertSpeed = minFallSpeed;
-  if(charController.isGournded)
-  {
-    if(Input.GetButtonDown(&quot;Jump&quot;))
-    {
-      vertSpeed = jumpSpeed;
-    }
-    else
-    {
-    vertSpeed = minFallSpeed;
-    }
-  }
-  else
-  {
-    vertSpeed += grivaty*5*Time.deltaTime;
-    if(vertSpeed&lt;maxFallSpeed)
-    {
-      //注意此处的判断为vertSpeed&lt;maxFallSpeed,因为两者都为负数
-      vertSpeed = maxFallSpeed;
-    }
-  }
-  movement.y = vertSpeed;
-}
-</code></pre><p>这段代码加在角色模型移动的代码中</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1822,7 +1850,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

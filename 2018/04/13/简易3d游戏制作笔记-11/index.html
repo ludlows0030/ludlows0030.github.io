@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>简易3d游戏制作笔记-11 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="保存和读取游戏进度基本实现思路 在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法 添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例 用字典保存游戏信息，并将字典内容序列化在文件流中 从文件流中反序列化出游戏信息   DataManager脚本  public class DataManager : MonoBehaviour, I">
+<meta name="keywords" content="Unity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易3d游戏制作笔记-11">
+<meta property="og:url" content="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="保存和读取游戏进度基本实现思路 在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法 添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例 用字典保存游戏信息，并将字典内容序列化在文件流中 从文件流中反序列化出游戏信息   DataManager脚本  public class DataManager : MonoBehaviour, I">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-13T12:25:14.149Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简易3d游戏制作笔记-11">
+<meta name="twitter:description" content="保存和读取游戏进度基本实现思路 在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法 添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例 用字典保存游戏信息，并将字典内容序列化在文件流中 从文件流中反序列化出游戏信息   DataManager脚本  public class DataManager : MonoBehaviour, I">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-简易3d游戏制作笔记-11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/13/简易3d游戏制作笔记-11/" class="article-date">
+  <time datetime="2018-04-13T12:03:57.000Z" itemprop="datePublished">2018-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      简易3d游戏制作笔记-11
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="保存和读取游戏进度"><a href="#保存和读取游戏进度" class="headerlink" title="保存和读取游戏进度"></a>保存和读取游戏进度</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法</li>
+<li>添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例</li>
+<li>用字典保存游戏信息，并将字典内容序列化在文件流中</li>
+<li>从文件流中反序列化出游戏信息</li>
+</ul>
+<ul>
+<li>DataManager脚本</li>
+</ul>
+<pre><code>public class DataManager : MonoBehaviour, IGameManager {
+  public ManagerStatus status {get;private set;}
+
+  private string _filename;
+
+  private NetworkService _network;
+
+  public void Startup(NetworkService service){
+    _network = service;
+
+    //构建文件保存的路径
+    _filename = Path.Combine(Application.persistentDataPath, &quot;game.dat&quot;);
+
+    status = ManagerStatus.Started;
+  }
+
+  public void SaveGameState(){
+    //将游戏信息保存在字典内
+    Dictionary&lt;string , object&gt;gamestate = new Dictionary&lt;string,object&gt;();
+    gamestate.Add(&quot;inventory&quot;,Managers.Inventory.GetData());
+    gamestate.Add(&quot;health&quot;,Managers.Player.health);
+    gamestate.Add(&quot;maxHealth&quot;,Managers.Player.maxHealth);
+    gamestate.Add(&quot;curLevel&quot;,Managers.Misssion.curLevel);
+    gamestate.Add(&quot;maxLevel&quot;,Managers.Misssion.maxLevel);
+
+    //将字典序列化到文件流中
+    FileStream stream = File.Create(_filename);
+    BinaryFormatter formatter = new BinaryFormatter();
+    formatter.Serialize(stream, gamestate);
+    stream.Close();
+  }
+
+  public void LoadGameState(){
+    if(!File.Exists(_filename)){
+      Debug.Log(&quot;No saved game&quot;);
+      return;
+    }
+
+    Dictionary&lt;string,object&gt; gamestate;
+
+
+    BinaryFormatter formatter = new BinaryFormatter();
+    FileStream stream = File.Open(_filename, FileMode.Open);
+    gamestate = formatter.Deserialize(stram) as Dictionary&lt;string,object&gt;;
+    stream.Close();
+
+    //更新游戏信息
+    Managers.Inventory.UpdateData((Dictionary&lt;string,int&gt;)gamestate[&quot;inventory&quot;]);
+    Managers.Player.UpdateData((int)gamestate[&quot;inventory&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Inventory.UpdateData((int)gamestate[&quot;curLevel&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Misssion.RestartCurrent();
+  }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/" data-id="cji32g4op001c5wvimrj31e99" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/26/算法（第4版）公开课编程题1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          算法（第4版）公开课编程题1
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/13/简易3d游戏制作笔记-10/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">简易3d游戏制作笔记-10</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

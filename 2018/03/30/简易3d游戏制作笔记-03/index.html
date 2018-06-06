@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>简易3d游戏制作笔记_03 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="实现跳跃动作角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力基本思路 进行一系列的判断，来决定角色模型上收到的vertSpeed为多少。  如果角色模型在地面上时，若按下“跳跃键”，则vertSpeed为一个向上的跳跃力，否则vertSpeed为一个很小的向下的力（保证模型在凹凸不平的地面上行走时，被按在地上）。  当角色模型不在地面上时，vertSpeed+=重力乘以一个系数，并且当ver">
+<meta name="keywords" content="Unity">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简易3d游戏制作笔记_03">
+<meta property="og:url" content="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="实现跳跃动作角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力基本思路 进行一系列的判断，来决定角色模型上收到的vertSpeed为多少。  如果角色模型在地面上时，若按下“跳跃键”，则vertSpeed为一个向上的跳跃力，否则vertSpeed为一个很小的向下的力（保证模型在凹凸不平的地面上行走时，被按在地上）。  当角色模型不在地面上时，vertSpeed+=重力乘以一个系数，并且当ver">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-30T07:23:29.724Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="简易3d游戏制作笔记_03">
+<meta name="twitter:description" content="实现跳跃动作角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力基本思路 进行一系列的判断，来决定角色模型上收到的vertSpeed为多少。  如果角色模型在地面上时，若按下“跳跃键”，则vertSpeed为一个向上的跳跃力，否则vertSpeed为一个很小的向下的力（保证模型在凹凸不平的地面上行走时，被按在地上）。  当角色模型不在地面上时，vertSpeed+=重力乘以一个系数，并且当ver">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-简易3d游戏制作笔记-03" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/30/简易3d游戏制作笔记-03/" class="article-date">
+  <time datetime="2018-03-30T07:09:34.000Z" itemprop="datePublished">2018-03-30</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      简易3d游戏制作笔记_03
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="实现跳跃动作"><a href="#实现跳跃动作" class="headerlink" title="实现跳跃动作"></a>实现跳跃动作</h1><h2 id="角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力"><a href="#角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力" class="headerlink" title="角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力"></a>角色模型时刻受到重力向下拉，当“跳跃”时，应用向上的力</h2><h3 id="基本思路"><a href="#基本思路" class="headerlink" title="基本思路"></a>基本思路</h3><ul>
+<li><p>进行一系列的判断，来决定角色模型上收到的vertSpeed为多少。</p>
+</li>
+<li><p>如果角色模型在地面上时，若按下“跳跃键”，则vertSpeed为一个向上的跳跃力，否则vertSpeed为一个很小的向下的力（保证模型在凹凸不平的地面上行走时，被按在地上）。</p>
+</li>
+<li><p>当角色模型不在地面上时，vertSpeed+=重力乘以一个系数，并且当vertSpeed大于设定的下落的最大速度时，使其等于该速度。从而避免vertSpeed过大</p>
+</li>
+</ul>
+<p>代码（C#）</p>
+<pre><code>void Update(){
+  float vertSpeed = minFallSpeed;
+  if(charController.isGournded)
+  {
+    if(Input.GetButtonDown(&quot;Jump&quot;))
+    {
+      vertSpeed = jumpSpeed;
+    }
+    else
+    {
+    vertSpeed = minFallSpeed;
+    }
+  }
+  else
+  {
+    vertSpeed += grivaty*5*Time.deltaTime;
+    if(vertSpeed&lt;maxFallSpeed)
+    {
+      //注意此处的判断为vertSpeed&lt;maxFallSpeed,因为两者都为负数
+      vertSpeed = maxFallSpeed;
+    }
+  }
+  movement.y = vertSpeed;
+}
+</code></pre><p>这段代码加在角色模型移动的代码中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/" data-id="cji32g4op000u5wviyi5pvgp0" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/01/简易3d游戏制作笔记-04/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          简易3d游戏制作笔记_04
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/03/29/简易3d游戏制作笔记-02/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">简易3d游戏制作笔记_02</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

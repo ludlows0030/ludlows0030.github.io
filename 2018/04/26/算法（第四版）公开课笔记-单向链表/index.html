@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>算法（第4版）公开课笔记-单向链表 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="算法（第4版）公开课笔记-单向链表 链表定义 链表是一种递归的数据结构。它或者为null或者指向一个结点Node的引用。一个结点包括一个泛型的元素和指向另一条链表的应用  结点的抽象数据类型 private class Node{   Item item;//泛型，我们希望用链表处理任意数据结构   Node next; }  举例：构造一个含有元素to,be,or的链表 Node first =">
+<meta name="keywords" content="算法（第4版）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法（第4版）公开课笔记-单向链表">
+<meta property="og:url" content="http://yoursite.com/2018/04/26/算法（第四版）公开课笔记-单向链表/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="算法（第4版）公开课笔记-单向链表 链表定义 链表是一种递归的数据结构。它或者为null或者指向一个结点Node的引用。一个结点包括一个泛型的元素和指向另一条链表的应用  结点的抽象数据类型 private class Node{   Item item;//泛型，我们希望用链表处理任意数据结构   Node next; }  举例：构造一个含有元素to,be,or的链表 Node first =">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-26T08:18:25.642Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法（第4版）公开课笔记-单向链表">
+<meta name="twitter:description" content="算法（第4版）公开课笔记-单向链表 链表定义 链表是一种递归的数据结构。它或者为null或者指向一个结点Node的引用。一个结点包括一个泛型的元素和指向另一条链表的应用  结点的抽象数据类型 private class Node{   Item item;//泛型，我们希望用链表处理任意数据结构   Node next; }  举例：构造一个含有元素to,be,or的链表 Node first =">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-算法（第四版）公开课笔记-单向链表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/26/算法（第四版）公开课笔记-单向链表/" class="article-date">
+  <time datetime="2018-04-26T08:06:22.000Z" itemprop="datePublished">2018-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法（第4版）公开课笔记-单向链表
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="算法（第4版）公开课笔记-单向链表"><a href="#算法（第4版）公开课笔记-单向链表" class="headerlink" title="算法（第4版）公开课笔记-单向链表"></a>算法（第4版）公开课笔记-单向链表</h1><ul>
+<li><p>链表定义</p>
+<pre><code>链表是一种递归的数据结构。它或者为null或者指向一个结点Node的引用。一个结点包括一个泛型的元素和指向另一条链表的应用
+</code></pre></li>
+<li><p>结点的抽象数据类型</p>
+<pre><code>private class Node{
+  Item item;//泛型，我们希望用链表处理任意数据结构
+  Node next;
+}
+</code></pre></li>
+<li><p>举例：构造一个含有元素to,be,or的链表</p>
+<pre><code>Node first = new Node();
+Node second = new Node();
+Node third = new Node();
+
+first.item = &quot;to&quot;;
+second.item = &quot;be&quot;;
+third.item = &quot;or&quot;;
+
+first.next = second;
+second.next = third;
+//third.next为默认的null
+</code></pre></li>
+</ul>
+<ul>
+<li><p>从表头插入结点</p>
+<pre><code>Node oldfirst = first;
+first = new Node();
+first.item = &quot;not&quot;;
+first.next = oldfirst;
+</code></pre></li>
+<li><p>从表头删除结点</p>
+<pre><code>first = first.next;
+</code></pre></li>
+<li><p>在表尾插入结点</p>
+<pre><code>Node oldlast = last;
+last = new Node();
+last.item = &quot;not&quot;;
+oldlast.next = last;
+</code></pre></li>
+</ul>
+<ul>
+<li><p>链表的遍历</p>
+<pre><code>for(Node x = first;x !=null;x = x.next){
+  //对每一个结点进行处理
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/26/算法（第四版）公开课笔记-单向链表/" data-id="cji32g4op001k5wvil1dqta6n" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/27/JAVA迭代器/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          JAVA迭代器
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/26/算法（第4版）公开课编程题1/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">算法（第4版）公开课编程题1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

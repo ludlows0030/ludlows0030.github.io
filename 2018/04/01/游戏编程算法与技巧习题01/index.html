@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>游戏编程算法与技巧习题01 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1. 为什么早期的游戏使用汇编语言？ 早期受家用机性能限制（通常CPU运行在1.1MHz，内存只有128字节），使得用C语言开发不太实际，所以只好用汇编语言开发。 2.什么是中间件？中间件在操作系统，网络和数据库之上，在应用软件之下，通常是为应用软件提供开发和运行的环境，例如用于开发游戏的Unity和Unreal（虚幻引擎）。并且通过中间件，可以使得应用程序能工作在多平台。 3.选择一款经典的街机">
+<meta name="keywords" content="游戏编程算法与技巧习题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="游戏编程算法与技巧习题01">
+<meta property="og:url" content="http://yoursite.com/2018/04/01/游戏编程算法与技巧习题01/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="1. 为什么早期的游戏使用汇编语言？ 早期受家用机性能限制（通常CPU运行在1.1MHz，内存只有128字节），使得用C语言开发不太实际，所以只好用汇编语言开发。 2.什么是中间件？中间件在操作系统，网络和数据库之上，在应用软件之下，通常是为应用软件提供开发和运行的环境，例如用于开发游戏的Unity和Unreal（虚幻引擎）。并且通过中间件，可以使得应用程序能工作在多平台。 3.选择一款经典的街机">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-01T08:41:21.377Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="游戏编程算法与技巧习题01">
+<meta name="twitter:description" content="1. 为什么早期的游戏使用汇编语言？ 早期受家用机性能限制（通常CPU运行在1.1MHz，内存只有128字节），使得用C语言开发不太实际，所以只好用汇编语言开发。 2.什么是中间件？中间件在操作系统，网络和数据库之上，在应用软件之下，通常是为应用软件提供开发和运行的环境，例如用于开发游戏的Unity和Unreal（虚幻引擎）。并且通过中间件，可以使得应用程序能工作在多平台。 3.选择一款经典的街机">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-游戏编程算法与技巧习题01" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/01/游戏编程算法与技巧习题01/" class="article-date">
+  <time datetime="2018-04-01T08:06:10.000Z" itemprop="datePublished">2018-04-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      游戏编程算法与技巧习题01
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="1-为什么早期的游戏使用汇编语言？"><a href="#1-为什么早期的游戏使用汇编语言？" class="headerlink" title="1. 为什么早期的游戏使用汇编语言？"></a>1. 为什么早期的游戏使用汇编语言？</h1><p> 早期受家用机性能限制（通常CPU运行在1.1MHz，内存只有128字节），使得用C语言开发不太实际，所以只好用汇编语言开发。</p>
+<h1 id="2-什么是中间件？"><a href="#2-什么是中间件？" class="headerlink" title="2.什么是中间件？"></a>2.什么是中间件？</h1><p>中间件在操作系统，网络和数据库之上，在应用软件之下，通常是为应用软件提供开发和运行的环境，例如用于开发游戏的Unity和Unreal（虚幻引擎）。并且通过中间件，可以使得应用程序能工作在多平台。</p>
+<h1 id="3-选择一款经典的街机游戏，讲一下它们在经典游戏循环中每个阶段都做了什么？"><a href="#3-选择一款经典的街机游戏，讲一下它们在经典游戏循环中每个阶段都做了什么？" class="headerlink" title="3.选择一款经典的街机游戏，讲一下它们在经典游戏循环中每个阶段都做了什么？"></a>3.选择一款经典的街机游戏，讲一下它们在经典游戏循环中每个阶段都做了什么？</h1><p>经典的游戏循环为</p>
+<ul>
+<li>处理输入</li>
+<li>更新游戏世界</li>
+<li>生成输出</li>
+</ul>
+<p>以拳皇为例：</p>
+<ul>
+<li>处理输入：处理摇杆和按键的输入。</li>
+<li>更新游戏世界：根据遥感和按键的输入，更新游戏角色的移动，跳跃，转身，以及招式的释放，并且检测招式的命中，以及命中后的效果。</li>
+<li>生成输出：更新图像的显示，使玩家可以看到角色移动，受伤等等效果。</li>
+</ul>
+<h1 id="4-在传统游戏循环中，有什么渲染之外的输出？"><a href="#4-在传统游戏循环中，有什么渲染之外的输出？" class="headerlink" title="4.在传统游戏循环中，有什么渲染之外的输出？"></a>4.在传统游戏循环中，有什么渲染之外的输出？</h1><ul>
+<li>检测器的检测：玩家是否靠近某一物体，触发机关类似的等等</li>
+<li>摄像机的更新：玩家控制镜头的移动<br>等等</li>
+</ul>
+<h1 id="5-一个简单的多线程游戏循环时怎么提升帧率的？"><a href="#5-一个简单的多线程游戏循环时怎么提升帧率的？" class="headerlink" title="5.一个简单的多线程游戏循环时怎么提升帧率的？"></a>5.一个简单的多线程游戏循环时怎么提升帧率的？</h1><p>渲染和逻辑更新同步执行，并且让第二条线程（负责渲染的线程）比主线程慢一秒。</p>
+<h1 id="6-什么是输入延迟？多线程游戏循环是怎么导致延迟的？"><a href="#6-什么是输入延迟？多线程游戏循环是怎么导致延迟的？" class="headerlink" title="6. 什么是输入延迟？多线程游戏循环是怎么导致延迟的？"></a>6. 什么是输入延迟？多线程游戏循环是怎么导致延迟的？</h1><p>玩家的输入更久才能在画面上有所反馈。<br>因为在渲染线程绘制时，不想让主线程简单地只等待渲染结束，所以让渲染线程比主线程慢一秒，从而导致这样的结果<br>玩家输入-&gt;主线程处理输入-&gt;一秒后-&gt;开始渲染-&gt;一段时间后-&gt;屏幕上出现（可见）</p>
+<h1 id="7-改变下面依赖于30FPS的代码，使其不依赖帧率"><a href="#7-改变下面依赖于30FPS的代码，使其不依赖帧率" class="headerlink" title="7.改变下面依赖于30FPS的代码，使其不依赖帧率"></a>7.改变下面依赖于30FPS的代码，使其不依赖帧率</h1><pre><code>position.x += 3.0;
+position.y += 7.0;
+</code></pre><p>:</p>
+<pre><code>targetFrameTime = 33.3f;
+while game is running
+  realDeltaTime = time since last frame;
+  gameDeltaTime = realDeltaTime*gameTimeFactor;
+
+position.x +=3.0*gameDeltaTime;
+position.y +=7.0*gameDeltaTime;
+
+while (time spent this frame)&lt;targetFrameTime
+  //做一些事将多出的时间用完
+</code></pre><h1 id="8-3个不同类型的游戏对象是什么？分别给出例子"><a href="#8-3个不同类型的游戏对象是什么？分别给出例子" class="headerlink" title="8.3个不同类型的游戏对象是什么？分别给出例子"></a>8.3个不同类型的游戏对象是什么？分别给出例子</h1><p>既需要更新又需要绘制：角色，敌人，技能，NPC等等<br>只需要更新：镜头，检测器<br>只绘制不更新：一些背景，或一些不与玩家发生互动的建筑</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/01/游戏编程算法与技巧习题01/" data-id="cji32g4o9000g5wviq65p4vg0" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/04/02/CRT中电子枪是如何绘图的？什么是场消隐期？/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          CRT中电子枪是如何绘图的？什么是场消隐期？
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/04/01/简易3d游戏制作笔记-04/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">简易3d游戏制作笔记_04</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

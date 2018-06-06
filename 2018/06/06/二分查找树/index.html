@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>二分查找树 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="二分查找树本质结构二分查找树由结点组成，结点包含的链接可以为空（null）或者指向其他结点。在二叉树中，每个结点只能有一个父结点（只有一个例外，也就是根结点，它没有父结点），而且每个结点都只有左右两个链接，分别指向自己的左子结点和右子结点。尽管链接指向的是结点，但也可以将每个链接看作指向了另一颗二叉树，而这棵树的根结点就是被指向的结点。另外每个结点还包含了一个键和一个值，键之间是有序的 定义一棵二">
+<meta name="keywords" content="算法（第4版）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="二分查找树">
+<meta property="og:url" content="http://yoursite.com/2018/06/06/二分查找树/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="二分查找树本质结构二分查找树由结点组成，结点包含的链接可以为空（null）或者指向其他结点。在二叉树中，每个结点只能有一个父结点（只有一个例外，也就是根结点，它没有父结点），而且每个结点都只有左右两个链接，分别指向自己的左子结点和右子结点。尽管链接指向的是结点，但也可以将每个链接看作指向了另一颗二叉树，而这棵树的根结点就是被指向的结点。另外每个结点还包含了一个键和一个值，键之间是有序的 定义一棵二">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-06-06T09:29:48.975Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="二分查找树">
+<meta name="twitter:description" content="二分查找树本质结构二分查找树由结点组成，结点包含的链接可以为空（null）或者指向其他结点。在二叉树中，每个结点只能有一个父结点（只有一个例外，也就是根结点，它没有父结点），而且每个结点都只有左右两个链接，分别指向自己的左子结点和右子结点。尽管链接指向的是结点，但也可以将每个链接看作指向了另一颗二叉树，而这棵树的根结点就是被指向的结点。另外每个结点还包含了一个键和一个值，键之间是有序的 定义一棵二">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-二分查找树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/06/二分查找树/" class="article-date">
+  <time datetime="2018-06-06T08:55:48.000Z" itemprop="datePublished">2018-06-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      二分查找树
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="二分查找树"><a href="#二分查找树" class="headerlink" title="二分查找树"></a>二分查找树</h1><h2 id="本质结构"><a href="#本质结构" class="headerlink" title="本质结构"></a>本质结构</h2><p>二分查找树由结点组成，结点包含的<em>链接</em>可以为空（null）或者指向其他结点。在二叉树中，每个结点只能有一个父结点（只有一个例外，也就是根结点，它没有父结点），而且每个结点都只有左右两个链接，分别指向自己的左子结点和右子结点。尽管链接指向的是结点，但也可以将每个链接看作指向了另一颗二叉树，而这棵树的根结点就是被指向的结点。另外每个结点还包含了一个键和一个值，键之间是有序的</p>
+<h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>一棵二叉查找树（BST）是一棵二叉树，其中每个结点都含有一个Comparable的键（以及相关联的值）且每个结点的键都大于其左子树中的任意结点的键而小于右子树中的任意结点的键</p>
+<h2 id="每个方法的实现思路"><a href="#每个方法的实现思路" class="headerlink" title="每个方法的实现思路"></a>每个方法的实现思路</h2><ul>
+<li><p>查找（get)</p>
+<ul>
+<li>当查找的键大于当前结点的键，则在右子树中继续查找</li>
+<li>当查找的键小于当前结点的键，则在左子树种继续查找</li>
+<li>当查找的键等于当前的结点的键，则返回当前结点的值</li>
+<li>当当前结点为null时，则返回null</li>
+</ul>
+</li>
+<li><p>插入(put)</p>
+<ul>
+<li>与get方法类似，当整个二叉树中没有相应键时创建新的结点，如果有相应键则更新值</li>
+</ul>
+</li>
+</ul>
+<p>查找与插入的递归有些相似之处，递归调用前相当于沿着树向下走，它会将给定的键和每个结点的键相比较并根据结果向左或者向右移动到下一个结点。然后将递归调用后的代码想象成沿着树向上爬。</p>
+<p>对于get方法，这对应着一系列的返回指令</p>
+<p>对于put方法，意味着重置搜索路径上的每个父结点指向子结点的链接，并更新路径中的每个结点计数器（因为插入了新的结点）</p>
+<ul>
+<li><p>最小键（min）</p>
+<ul>
+<li>如果根结点的左链接为空，那么一棵二叉查找树的最小值就是根结点；如果左链接非空，那么树中的最小键就是左子树中的最小键</li>
+</ul>
+</li>
+<li><p>向下取整（floor）</p>
+<ul>
+<li>如果给定的键小于二叉树中的根结点，那么向下取整的键就在二叉树中的左子树里；如果给定的键大于二叉树中的根结点，那么向下取整的键如果不在右子树中，即为树的根结点。</li>
+</ul>
+</li>
+<li><p>选择（select）</p>
+<ul>
+<li>如果左子树种的结点数t大于k,继续在左子树中查找排名为k的键；如果t等于k,根结点就是目标；如果t小于k，那么就在右子树种查找排名为k-t-1的键</li>
+</ul>
+</li>
+<li><p>排名 (rank)</p>
+<ul>
+<li>如果给定的键和根结点的键相等，我们返回左子树中的结点总数t；如果给定的键小于根结点，返回键在左子树中的排名；如果大于，返回在右子树中的排名+t+1</li>
+</ul>
+</li>
+<li><p>删除最小键(deleteMin)</p>
+<ul>
+<li>不断深入根结点的左子树中直至遇见一个空链接，然后将指向该结点的链接指向该结点的右子树。</li>
+</ul>
+</li>
+<li><p>删除操作（delete）</p>
+<ul>
+<li>将指向即将被删除的结点的链接保存为t</li>
+<li>将x随机地指向后继结点或者前驱结点min(t.right)或者max(t.left)</li>
+<li>将x的右链接指向deleteMin(t.right)</li>
+<li>将x的左链接指向t.left</li>
+</ul>
+</li>
+</ul>
+<h2 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h2><pre><code>public class BST&lt;Key extends Comparable&lt;Key&gt;, Value&gt;
+{
+    private Node root;
+
+    private class Node
+    {
+        private Key key;
+        private Value val;
+        private Node left,right;
+        private int N;
+
+        public Node(Key key,Value val,int N)
+        {
+            this.key = key;
+            this.val = val;
+            this.N = N;
+        }
+    }
+
+    public int size()
+    {
+        return size(root);
+    }
+
+    private int size(Node x)
+    {
+        if(x == null) return 0;
+        else return x.N;
+    }
+
+    public Value get(Key key)
+    {
+        return get(root,key);
+    }
+
+    private Value get(Node x,Key key)
+    {
+        if(x==null) return null;//树没有相应的key
+        //二分法
+        int cmp = key.compareTo(x.key);
+        if(cmp&gt;0) get(x.right,key);//大，找右边
+        else if(cmp&lt;0) get(x.left,key);//小，找左边
+        else return x.val;
+    }
+
+    public void put(Key key,Value val)
+    {
+        root = put(root,key,val);
+    }
+
+    private Node put(Node x,Key key,Value val)
+    {
+        if(x==null) return new Node(key,val,1);//如果当前结点为空，则创建一个新结点
+        int cmp = key.compareTo(x.key);
+        if(cmp&gt;0) x.right = put(x.right,key,val);//大，找右边
+        else if(cmp&lt;0) x.left = put(x.left,key,val);//小，找左边
+        else x.val = val;//相等，更新值
+        x.N = size(left)+size(right)+1;//更新结点计数器
+        return x;//返回自身，相当于迭代完成后，沿着路径向上重置
+    }
+
+    public Key min()
+    {
+        return min(root).key;
+    }
+
+    private Node min(Node x)
+    {
+        if(x.left == null) return x;//空返回x，已经在整个树的最左边了
+        return min(x.left);//否则继续朝左边找
+    }
+
+    public Key floor(Key key)
+    {
+        Node x = floor(root,key);
+        if(x == null)return null;
+        return x.key;
+    }
+
+    private Node floor(Node x,Key key)
+    {
+        if(x == null) return null;//如果结点为空，返回空
+        int cmp = key.compareTo(x.key);
+        if(cmp==0) return x;//命中
+        if(cmp&lt;0) return floor(x.left,key);//小，找左边
+        //键大于根节点，在右边找
+        Node t = floor(x.right,key);
+        if(t!=null) return t;//当t存在时，返回t
+        else x;//不存在时，返回当前结点
+    }
+
+    public Key select(int k)
+    {
+        return select(root, k).key;
+    }
+
+    private Node select(Node x,int k)
+    {
+        if(x == null) return null;
+        t = size(x.left);//左子树结点数量
+        if(t&gt;k) select(x.left,k);//t大于k ,排名为k的结点在左子树
+        else if(t == k) return x;//t等于k ,排名为k的结点就是当前结点
+        else select(x.right,k-t-1);//t小于k,结点在右子树，但是需要找在右子树种排名k-t-1的结点（除去左子树的结点数和根结点）
+    }
+
+    public int rank(Key key)
+    {
+        return rank(key,root);
+    }
+
+    private int rank(Key key,Node x)
+    {
+        if(x == null) return 0;
+        int cmp = key.compareTo(x.key);
+        if(cmp&lt;0) return rank(key,x.left);
+        else if(cmp&gt;0) return 1+size(left)+rank(key,x.right);//根结点+左子树结点数量+结点在右子树中的排名
+        else return size(left);//如果找到则返回结点左子树的结点数量，即结点在右子树中的排名
+    }
+
+    public void deleteMin()
+    {
+        root = deleteMin(root);
+    }
+
+    private Node deleteMin(Node x)
+    {
+        if(x.left == null) return x.right;//如果x.left为空，则x是最小的，返回x.right
+        x.left = deleteMin(x.left);//否则继续在左子树种寻找
+        x.N = size(left)+size(right)+1;//重置结点计数器
+        return x;//返回当前结点 和put()中类似
+    }
+
+    public void delete(Key key)
+    {
+        root = delete(root,key);
+    }
+
+    private Node delete(Node x,Key key)
+    {
+        if(x == null) return null;
+        int cmp = key.compareTo(x.key);
+        if(cmp&gt;0) x.right = delete(x.right,key);
+        else if(cmp&lt;0) x.left =delete(x.left,key);
+        else
+        {
+            if(x.right==null) return x.left;
+            if(x.left==null) return x.right;
+
+            Node t = x;
+            x = min(t.right);
+            x.right = deleteMin(t.right);
+            x.left = t.left;
+        }
+        x.N = size(left)+size(right)+1;
+        return x;
+    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/06/二分查找树/" data-id="cji32g4o900055wvi4tdug6sd" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">基于二分查找的有序数组实现的符号表</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

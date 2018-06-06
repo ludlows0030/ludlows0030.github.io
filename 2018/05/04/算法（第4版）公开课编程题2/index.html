@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>算法（第4版）公开课编程题2 | Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="算法（第四版）公开课编程题2题目要求Deque.Javaimport edu.princeton.cs.algs4.LinkedStack; import java.util.Iterator; import edu.princeton.cs.algs4.StdOut; public class Deque&amp;lt;Item&amp;gt; implements Iterable&amp;lt;Item&amp;gt;{">
+<meta name="keywords" content="算法（第4版）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法（第4版）公开课编程题2">
+<meta property="og:url" content="http://yoursite.com/2018/05/04/算法（第4版）公开课编程题2/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:description" content="算法（第四版）公开课编程题2题目要求Deque.Javaimport edu.princeton.cs.algs4.LinkedStack; import java.util.Iterator; import edu.princeton.cs.algs4.StdOut; public class Deque&amp;lt;Item&amp;gt; implements Iterable&amp;lt;Item&amp;gt;{">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-04T08:14:18.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法（第4版）公开课编程题2">
+<meta name="twitter:description" content="算法（第四版）公开课编程题2题目要求Deque.Javaimport edu.princeton.cs.algs4.LinkedStack; import java.util.Iterator; import edu.princeton.cs.algs4.StdOut; public class Deque&amp;lt;Item&amp;gt; implements Iterable&amp;lt;Item&amp;gt;{">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-算法（第4版）公开课编程题2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/04/算法（第4版）公开课编程题2/" class="article-date">
+  <time datetime="2018-05-04T08:04:05.000Z" itemprop="datePublished">2018-05-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      算法（第4版）公开课编程题2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="算法（第四版）公开课编程题2"><a href="#算法（第四版）公开课编程题2" class="headerlink" title="算法（第四版）公开课编程题2"></a>算法（第四版）公开课编程题2</h1><h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a><a href="http://coursera.cs.princeton.edu/algs4/assignments/queues.html" title="Coursera" target="_blank" rel="noopener">题目要求</a></h2><h3 id="Deque-Java"><a href="#Deque-Java" class="headerlink" title="Deque.Java"></a>Deque.Java</h3><pre><code>import edu.princeton.cs.algs4.LinkedStack;
+import java.util.Iterator;
+import edu.princeton.cs.algs4.StdOut;
+public class Deque&lt;Item&gt; implements Iterable&lt;Item&gt;{
+  private LinkedStack&lt;Item&gt; headStack;
+  private LinkedStack&lt;Item&gt; endStack;  
+  //维护两个栈一个负责头部的加入和移除一个负责尾部的
+
+  public Deque(){
+      headStack = new LinkedStack&lt;Item&gt;();
+      endStack = new LinkedStack&lt;Item&gt;();
+  }
+
+  public boolean isEmpty(){
+      return headStack.isEmpty()&amp;&amp;endStack.isEmpty();
+      //如果两个栈都为空的话则整个栈为空
+  }
+
+  public int size(){
+      return headStack.size()+endStack.size();
+      //两个栈的size相加等于整个栈
+  }
+
+  public void addFirst(Item item){
+      if(item != null){
+          headStack.push(item);
+      }
+      else{
+          throw new java.lang.IllegalArgumentException();
+      }
+      //在栈的最前端加入元素等于在头部栈的栈顶加入元素，头部栈的栈顶是整个栈的最前端，尾部栈的栈顶是整个栈的最末端
+  }
+
+  public void addLast(Item item){
+      if(item != null){
+           endStack.push(item);
+      }
+      else{
+          throw new java.lang.IllegalArgumentException();
+      }       
+  }
+
+  public Item removeFirst(){
+      if(!isEmpty()){                    
+        //如果头部栈为空的话，要移除第一个元素，需要将尾部栈的元素倒序复制到头部栈
+          if(headStack.isEmpty()){
+              while(!endStack.isEmpty()){
+                  headStack.push(endStack.pop());
+              }
+          }
+          return headStack.pop();
+      }
+      else throw new java.util.NoSuchElementException();
+
+  }
+
+  public Item removeLast(){
+      if(!isEmpty()){         
+        //如果尾部栈为空的话，要移除最后一个元素，需要将头部栈的元素倒序复制到尾部栈           
+          if(endStack.isEmpty()){
+              while(!headStack.isEmpty()){
+                  endStack.push(headStack.pop());
+              }
+          }
+          return headStack.pop();
+      }
+      else throw new java.util.NoSuchElementException();        
+  }
+
+  public Iterator&lt;Item&gt; iterator(){
+      return new DequeIterator();
+  }
+
+  private class DequeIterator implements Iterator&lt;Item&gt;{
+      private int i = size();
+
+      Iterator&lt;Item&gt; head = headStack.iterator();
+      Iterator&lt;Item&gt; end = endStack.iterator();
+
+      public boolean hasNext(){return i&gt;0;}
+      public Item next(){
+          if(!hasNext()){throw new java.util.NoSuchElementException();}
+          if(!headStack.isEmpty()){
+              i--;
+              return head.next();
+          }
+          else if (headStack.isEmpty()){
+              while(!endStack.isEmpty()){
+                  headStack.push(endStack.pop());
+              }
+              i--;
+              return head.next();
+          }  
+          else throw new java.util.NoSuchElementException();
+      }
+      public void remove(){
+          throw new java.lang.UnsupportedOperationException();
+      }
+  }
+  //测试函数
+  public static void main(String[] args){
+      Deque&lt;Integer&gt; dq = new Deque&lt;Integer&gt;();
+      dq.addFirst(1);
+      dq.addLast(2);
+      dq.addFirst(4);
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.removeFirst());
+      StdOut.println(dq.size());
+  }
+}
+</code></pre><h2 id="RandomizedQueue-java"><a href="#RandomizedQueue-java" class="headerlink" title="RandomizedQueue.java"></a>RandomizedQueue.java</h2><pre><code>import java.util.Iterator;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdOut;
+public class RandomizedQueue&lt;T&gt; implements Iterable&lt;T&gt;{
+
+  private T[] s;//用数组实现队列
+  private int N;//当前数组中元素个数
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  public RandomizedQueue(){
+    s = (T[])new Comparable&lt;?&gt;[1];
+    N = 0;
+  }
+
+  @SuppressWarnings(&quot;unchecked&quot;)
+  private void resize(int capacity){
+    //数组大小重置为capacity
+    T[] copy = (T[])new Comparable&lt;?&gt;[capacity];
+    for(int i = 0;i&lt;N;i++){
+        copy[i]=s[i];
+    }
+    s = copy;
+  }    
+
+  public boolean isEmpty(){
+    return N == 0;
+  }
+
+  public int size(){
+    return N;
+  }
+
+  public void enqueue(T item){
+    if(item ==null){
+        throw new java.lang.IllegalArgumentException();
+    }
+    if(N == s.length){
+      //如果数组满了，更改数组大小为当前两倍
+        resize(2*s.length);
+    }
+    s[N++] = item;      
+  }
+
+  public T dequeue(){
+    if(isEmpty()){
+        throw new java.util.NoSuchElementException();
+    }        
+    int index = StdRandom.uniform(N);
+    T temp = s[index];
+    s[index] = s[N-1];
+    s[N-1] = temp;
+    //交换随机索引和最后一个索引对应的值
+    T item = s[--N];
+    s[N] = null;
+    if(N&gt;0&amp;&amp;N&lt;s.length/4){
+      //如果数组不满1/4，更改数组大小为当前的1/2
+        resize(s.length/2);
+    }
+    return item;
+  }
+
+  public T sample(){
+    int index = StdRandom.uniform(N);
+    return s[index];
+  }
+
+  public Iterator&lt;T&gt; iterator(){
+    return new RandomIterator();
+  }
+
+  private class RandomIterator implements Iterator&lt;T&gt;{
+    private int num =N;     
+
+    public boolean hasNext(){
+        return N==0;
+    }
+
+    public T next(){
+        if(num&gt;0){
+            int index = StdRandom.uniform(num--);
+            T temp = s[index];
+            s[index] = s[num];
+            s[num]= temp;
+            return temp;      
+        }
+        else{
+            throw new java.util.NoSuchElementException();
+        }
+    }
+
+    public void remove(){
+        throw new java.lang.UnsupportedOperationException();
+    }
+  }
+
+  public static void main(String[] args){
+    RandomizedQueue&lt;Integer&gt; rq = new RandomizedQueue&lt;Integer&gt;();
+    rq.enqueue(1);
+    rq.enqueue(45);
+    rq.enqueue(23);
+    rq.enqueue(23214);
+    rq.enqueue(43);
+    rq.enqueue(123);
+    rq.enqueue(435);
+    rq.enqueue(234);
+    /*
+    StdOut.println(rq.sample());
+    StdOut.println(rq.dequeue());
+    */
+    Iterator&lt;Integer&gt; i = rq.iterator();
+    while(!i.hasNext()){
+        int s = i.next();
+        StdOut.println(s);
+    }
+  }
+}
+</code></pre><h2 id="Permutation-java"><a href="#Permutation-java" class="headerlink" title="Permutation.java"></a>Permutation.java</h2><pre><code>import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdIn;
+public class Permutation {
+  public static void main(String[] args){
+      RandomizedQueue&lt;String&gt; rq = new RandomizedQueue&lt;String&gt;();
+      int k = Integer.parseInt(args[0]);//从命令行接收参数
+      while(!StdIn.isEmpty()){
+          String str = StdIn.readString();//从标准输入流中接收字节
+          rq.enqueue(str);
+      }
+      for(int i = 0;i&lt;k;i++){
+          if(!rq.isEmpty()){          
+               StdOut.println(rq.dequeue());
+          }
+      }
+  }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/04/算法（第4版）公开课编程题2/" data-id="cji327co9001fvcvim1q0cq7c" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/07/选择排序、插入排序和希尔排序/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          选择排序、插插入排序和希尔排序
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/05/02/可以返回最大值的栈/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">可以返回最大值的栈</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

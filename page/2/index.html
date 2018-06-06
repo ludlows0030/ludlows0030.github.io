@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Ludlows&#39; Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Ludlows&#39; Blog">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Ludlows&#39; Blog">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ludlows&#39; Blog">
+  
+    <link rel="alternate" href="/atom.xml" title="Ludlows&#39; Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Ludlows&#39; Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">lil&#39;Clinic</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-JAVA迭代器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/27/JAVA迭代器/" class="article-date">
+  <time datetime="2018-04-27T07:26:29.000Z" itemprop="datePublished">2018-04-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/27/JAVA迭代器/">JAVA迭代器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="JAVA迭代器"><a href="#JAVA迭代器" class="headerlink" title="JAVA迭代器"></a>JAVA迭代器</h1><p>集合数据类型的基本操作之一就是，能够使用JAVA的foreach语句通过<em>迭代</em>遍历并处理集合中的每个元素。并且不依赖于集合数据类型的具体实现。<br>如：</p>
+<pre><code>Stack&lt;String&gt; collection = new Stack&lt;String&gt;();
+...
+for(String s : collection)
+  StdOut.println(s);
+...
+</code></pre><p>等同于：</p>
+<pre><code>Iterator&lt;String&gt; i = collection.iterator();
+while(i.hasNext()){
+  String s = i.next();
+  StdOut.println(s);
+}
+</code></pre><p>所以 任意可迭代的集合数据类型中 都需要实现：</p>
+<ul>
+<li>集合数据类型必须实现一个iterator（）方法并返回一个Iterator对象；</li>
+<li>Iterator类中必须包含两个方法hasNext()（返回一个布尔值）和next()（返回集合的数据类型）</li>
+</ul>
+<p>在JAVA中，使用接口机制来指定一个类所必须实现的方法。要使一个类可迭代，第一步就是在它的声明中加入implements Iterable<item>,即:</item></p>
+<pre><code>public interface Iterable&lt;Item&gt;{
+  Iterator&lt;Item&gt; iterator();
+}
+</code></pre><p>然后就可以在类中添加一个iterator方法，并返回一个迭代器Iterator<item>。如：</item></p>
+<pre><code>public Iterator&lt;Item&gt; iterator(){
+  return new ReverseArrayIterator();//迭代器的名字根据需求起
+}
+</code></pre><h2 id="迭代器是什么？"><a href="#迭代器是什么？" class="headerlink" title="迭代器是什么？"></a>迭代器是什么？</h2><p>迭代器是一个实现了hasNext()和next()方法的类的对象，由以下的接口定义：</p>
+<pre><code>public interface Iterator&lt;Item&gt;
+{
+  boolean hasNext();
+  Item next();
+}
+</code></pre><p>然后就可以在一个类中的嵌套类实现这些方法:</p>
+<pre><code>private class ReverseArrayIterator implements Iterator&lt;Item&gt;
+{
+  private i = N;
+
+  public boolean hasNext(){return i&gt;0;}
+  public Item next(){return a[--i]}
+}
+</code></pre><p>此处需要注意的是，嵌套类可以访问包含它的类的实例变量，在这里就是a[]和N。</p>
+<p>最后还有一个非常重要的细节，需要在程序的开头加上：</p>
+<pre><code>import java.util.Iterator;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/27/JAVA迭代器/" data-id="cji327cnt0004vcvi3oql32bj" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-算法（第四版）公开课笔记-单向链表" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/26/算法（第四版）公开课笔记-单向链表/" class="article-date">
+  <time datetime="2018-04-26T08:06:22.000Z" itemprop="datePublished">2018-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/26/算法（第四版）公开课笔记-单向链表/">算法（第4版）公开课笔记-单向链表</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="算法（第4版）公开课笔记-单向链表"><a href="#算法（第4版）公开课笔记-单向链表" class="headerlink" title="算法（第4版）公开课笔记-单向链表"></a>算法（第4版）公开课笔记-单向链表</h1><ul>
+<li><p>链表定义</p>
+<pre><code>链表是一种递归的数据结构。它或者为null或者指向一个结点Node的引用。一个结点包括一个泛型的元素和指向另一条链表的应用
+</code></pre></li>
+<li><p>结点的抽象数据类型</p>
+<pre><code>private class Node{
+  Item item;//泛型，我们希望用链表处理任意数据结构
+  Node next;
+}
+</code></pre></li>
+<li><p>举例：构造一个含有元素to,be,or的链表</p>
+<pre><code>Node first = new Node();
+Node second = new Node();
+Node third = new Node();
+
+first.item = &quot;to&quot;;
+second.item = &quot;be&quot;;
+third.item = &quot;or&quot;;
+
+first.next = second;
+second.next = third;
+//third.next为默认的null
+</code></pre></li>
+</ul>
+<ul>
+<li><p>从表头插入结点</p>
+<pre><code>Node oldfirst = first;
+first = new Node();
+first.item = &quot;not&quot;;
+first.next = oldfirst;
+</code></pre></li>
+<li><p>从表头删除结点</p>
+<pre><code>first = first.next;
+</code></pre></li>
+<li><p>在表尾插入结点</p>
+<pre><code>Node oldlast = last;
+last = new Node();
+last.item = &quot;not&quot;;
+oldlast.next = last;
+</code></pre></li>
+</ul>
+<ul>
+<li><p>链表的遍历</p>
+<pre><code>for(Node x = first;x !=null;x = x.next){
+  //对每一个结点进行处理
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/26/算法（第四版）公开课笔记-单向链表/" data-id="cji327co9001kvcvi2hnddgdc" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-算法（第4版）公开课编程题1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/26/算法（第4版）公开课编程题1/" class="article-date">
+  <time datetime="2018-04-26T05:27:54.000Z" itemprop="datePublished">2018-04-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/26/算法（第4版）公开课编程题1/">算法（第4版）公开课编程题1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="算法（第四版）公开课编程题1"><a href="#算法（第四版）公开课编程题1" class="headerlink" title="算法（第四版）公开课编程题1"></a>算法（第四版）公开课编程题1</h1><h2 id="题目要求"><a href="#题目要求" class="headerlink" title="题目要求"></a><a href="http://coursera.cs.princeton.edu/algs4/assignments/percolation.html" title="Coursera" target="_blank" rel="noopener">题目要求</a></h2><h3 id="Percolation-Java"><a href="#Percolation-Java" class="headerlink" title="Percolation.Java"></a>Percolation.Java</h3><pre><code>import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+import edu.princeton.cs.algs4.StdRandom;
+import edu.princeton.cs.algs4.StdOut;
+public class Percolation {
+    private boolean[] opened; //所有结点是否开放的布尔值数组
+    private int n; // n*n大小的grid
+    WeightedQuickUnionUF uf;
+
+    public Percolation(int n){
+        this.n = n; //储存传入的参数n
+        uf = new WeightedQuickUnionUF(n*n+2); //利用并查集的类建立n*n+2大小的序列，第一位id为0，最后一位id为n*n-1
+
+        //模拟开始时，出第一个点和最后一个点（两个虚拟点位）默认为开放，其余的都默认为关闭
+        opened = new boolean[n*n+2];
+        for(int i=1;i&lt;n*n+1;i++){
+            opened[i] = false;
+        }
+        opened[0] = true;
+        opened[n*n+1] = true;
+    }
+
+    //将传入的二维定位（行、列）转化为一维的id
+    private int index(int row, int col){  
+        //当传入的行数为0时，返回第一个虚拟点位的id
+        if(row==0){
+            return 0;
+        }
+        //当传入行数为n+1时，返回最后一个点（虚拟点位）的id
+        else if(row==n+1){
+            return n*n+1;
+        }
+        //其余情况通过计算返回id
+        else{
+            int p = (row-1)*n+col;
+            return p;            
+        }                  
+    }
+
+    //使传入坐标点开放
+    public void open(int row, int col){
+        int p = index(row,col);
+        opened[p] = true;
+        //检查该点上下左右是否开放，如果开放则将两者连接
+        boolean up = isOpen(row-1,col);
+        boolean right = isOpen(row,col+1);
+        boolean left = isOpen(row,col-1);
+        boolean down = isOpen(row+1,col);
+        if(up) uf.union(p,index(row-1,col));
+        if(right) uf.union(p,index(row,col+1));    
+        if(left) uf.union(p,index(row,col-1));
+        if(down) uf.union(p,index(row+1,col));
+    }
+    //检查传入坐标的点是否开放
+    public boolean isOpen(int row,int col){
+        //当传入行数为0的时候，返回第一个虚拟点位的开放性
+        if(row==0){
+            return opened[0];
+        }
+        //当传入行数为n+1时，返回第二个虚拟点位（位于最后）的开放性
+        else if(row==n+1){
+            return opened[n*n+1];
+        }
+        //当行数超出边界时，返回fasle
+        else if(row&lt;0||col&lt;=0||row&gt;n+1||col&gt;n){
+            return false;
+        }
+        //其余情况通过计算p
+        else{
+            int p = index(row,col);
+            return opened[p];            
+        }
+    }
+
+    public boolean isFull(int row,int col){
+        int p = index(row,col);
+        return !opened[p];
+    }
+    //当前开放的点在系统中的占比
+    public int numberOfOpenSites(){
+        int openNum = 0;
+        for(int i=1;i&lt;n*n+1;i++){
+            if(opened[i]){
+                openNum++;
+            }
+        }
+        return openNum;
+    }
+    //该系统是否渗透
+    public boolean percolates(){
+        return uf.connected(0,n*n+1);
+    }
+    //如果系统不渗透，持续随机打开系统中的点，直到系统渗透为止
+    public void doPercolation(int n){
+        while(!percolates()){
+            int row = StdRandom.uniform(n)+1;
+            int col = StdRandom.uniform(n)+1;
+            open(row,col);
+        }
+    }
+
+    public static void main(String[] args){
+        int n = StdRandom.uniform(10);
+        Percolation percolation = new Percolation(n);
+        while(!percolation.percolates()){
+            int row = StdRandom.uniform(n)+1;
+            int col = StdRandom.uniform(n)+1;
+            percolation.open(row,col);
+        }
+        StdOut.println(&quot;system is percolate&quot;);    
+    }
+}
+</code></pre><h3 id="PercolationStats-Java"><a href="#PercolationStats-Java" class="headerlink" title="PercolationStats.Java"></a>PercolationStats.Java</h3><pre><code>import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.StdStats;
+
+public class PercolationStats {
+    private double[] thresholdArray;//保存几次测试渗透系统阈值的数组
+    private int t = 0;
+
+    public PercolationStats(int n,int trials){
+        t = trials;//测试次数
+        thresholdArray = new double[t];
+        //进行测试
+        while(trials&gt;0){
+            Percolation percolation = new Percolation(n);
+            percolation.doPercolation(n);
+            double openNum = percolation.numberOfOpenSites();
+            double sum = n*n;
+            double threshold = openNum/sum;
+            thresholdArray[trials-1] = threshold;
+            trials--;
+        }
+
+    }
+
+    //计算平均值
+    public double mean(){
+        return StdStats.mean(thresholdArray);
+    }
+
+    //计算标准差
+    public double stddev(){
+        return StdStats.stddev(thresholdArray);
+    }
+    //计算置信区间下限
+    public double confidenceLo(){
+        return mean()-(1.96*stddev()/Math.sqrt(t));
+    }
+    //计算置信区间上限
+    public double confidenceHi(){
+        return mean()+(1.96*stddev()/Math.sqrt(t));
+    }
+    //从命令行接收两个数字，（系统大小和测试次数），打印数据
+    public static void main(String[] args){
+        int n;
+        int trials;
+        n = Integer.parseInt(args[0]);
+        trials = Integer.parseInt(args[1]);
+        PercolationStats percolationStats = new PercolationStats(n,trials);
+        StdOut.println(&quot;mean = &quot;+percolationStats.mean());
+        StdOut.println(&quot;stddev = &quot;+percolationStats.stddev());
+        StdOut.println(&quot;95% confidece interval = [&quot;+percolationStats.confidenceLo()+&quot;,&quot;+percolationStats.confidenceHi()+&quot;];&quot;);
+    }   
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/26/算法（第4版）公开课编程题1/" data-id="cji327co9001hvcvig67uhuf7" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-11" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/13/简易3d游戏制作笔记-11/" class="article-date">
+  <time datetime="2018-04-13T12:03:57.000Z" itemprop="datePublished">2018-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/简易3d游戏制作笔记-11/">简易3d游戏制作笔记-11</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="保存和读取游戏进度"><a href="#保存和读取游戏进度" class="headerlink" title="保存和读取游戏进度"></a>保存和读取游戏进度</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>在响应的脚本里添加UpdateData方法，读取游戏信息后进行更新的方法</li>
+<li>添加DataManager新脚本用于管理保存和读取，并在Managers里添加用于访问的实例</li>
+<li>用字典保存游戏信息，并将字典内容序列化在文件流中</li>
+<li>从文件流中反序列化出游戏信息</li>
+</ul>
+<ul>
+<li>DataManager脚本</li>
+</ul>
+<pre><code>public class DataManager : MonoBehaviour, IGameManager {
+  public ManagerStatus status {get;private set;}
+
+  private string _filename;
+
+  private NetworkService _network;
+
+  public void Startup(NetworkService service){
+    _network = service;
+
+    //构建文件保存的路径
+    _filename = Path.Combine(Application.persistentDataPath, &quot;game.dat&quot;);
+
+    status = ManagerStatus.Started;
+  }
+
+  public void SaveGameState(){
+    //将游戏信息保存在字典内
+    Dictionary&lt;string , object&gt;gamestate = new Dictionary&lt;string,object&gt;();
+    gamestate.Add(&quot;inventory&quot;,Managers.Inventory.GetData());
+    gamestate.Add(&quot;health&quot;,Managers.Player.health);
+    gamestate.Add(&quot;maxHealth&quot;,Managers.Player.maxHealth);
+    gamestate.Add(&quot;curLevel&quot;,Managers.Misssion.curLevel);
+    gamestate.Add(&quot;maxLevel&quot;,Managers.Misssion.maxLevel);
+
+    //将字典序列化到文件流中
+    FileStream stream = File.Create(_filename);
+    BinaryFormatter formatter = new BinaryFormatter();
+    formatter.Serialize(stream, gamestate);
+    stream.Close();
+  }
+
+  public void LoadGameState(){
+    if(!File.Exists(_filename)){
+      Debug.Log(&quot;No saved game&quot;);
+      return;
+    }
+
+    Dictionary&lt;string,object&gt; gamestate;
+
+
+    BinaryFormatter formatter = new BinaryFormatter();
+    FileStream stream = File.Open(_filename, FileMode.Open);
+    gamestate = formatter.Deserialize(stram) as Dictionary&lt;string,object&gt;;
+    stream.Close();
+
+    //更新游戏信息
+    Managers.Inventory.UpdateData((Dictionary&lt;string,int&gt;)gamestate[&quot;inventory&quot;]);
+    Managers.Player.UpdateData((int)gamestate[&quot;inventory&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Inventory.UpdateData((int)gamestate[&quot;curLevel&quot;],(int)gamestate[&quot;maxHealth&quot;]);
+    Managers.Misssion.RestartCurrent();
+  }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/" data-id="cji327co9001cvcvi921kybzw" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-10" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/13/简易3d游戏制作笔记-10/" class="article-date">
+  <time datetime="2018-04-13T11:43:01.000Z" itemprop="datePublished">2018-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/简易3d游戏制作笔记-10/">简易3d游戏制作笔记-10</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="利用Messenger系统传递消息"><a href="#利用Messenger系统传递消息" class="headerlink" title="利用Messenger系统传递消息"></a>利用Messenger系统传递消息</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>复制Wiki上的Messenger到项目工程</li>
+<li>一个管理事件清单的GameEvent类</li>
+<li>一个广播事件的方法，放在方法需要被广播的地方（例如血量修改后，需要通知其他脚本例如更新UI）</li>
+<li><p>一个接收事件的方法，用于接收广播的消息</p>
+</li>
+<li><p>GameEvent脚本</p>
+</li>
+</ul>
+<pre><code>public static class GameEvent{
+  public const string 消息名 = &quot;消息内容&quot;;
+}
+</code></pre><ul>
+<li>广播方法</li>
+</ul>
+<pre><code>Messenger&lt;若有传递的参数可在此声明类型&gt;.Broadcast(GameEvent.消息名,传递的参数);
+</code></pre><ul>
+<li>接收和移除接收的方法</li>
+</ul>
+<pre><code>Messenger.AddListener(GameEvent.消息名,接收到消息后调用的方法());
+
+Messenger.RemoveListener(GameEvent.消息名，接收到消息后调用的方法);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-10/" data-id="cji327co9001avcvi3qwwdz3l" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-09" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/13/简易3d游戏制作笔记-09/" class="article-date">
+  <time datetime="2018-04-13T11:27:15.000Z" itemprop="datePublished">2018-04-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/13/简易3d游戏制作笔记-09/">简易3d游戏制作笔记-09</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="装备物品和使用物品"><a href="#装备物品和使用物品" class="headerlink" title="装备物品和使用物品"></a>装备物品和使用物品</h1><p>在InventoryMnager中添加装备物品和使用物品的代码</p>
+<pre><code>public string equippedItem(get; private set;)
+
+public bool EquipItem(string name){
+  //如果物品列表中包含有名为name的物品并且还未被装备
+  if(_items.ContainsKey(name)&amp;&amp;equippedItem!=name){
+    equippedItem = name;
+    return true;
+  }
+
+  equippedItem = null;
+  return false;
+}
+
+public bool ConsumeItem(string name){
+  //如果有此物品则，物品数量--
+  if(_items.ContainsKey(name)){
+    _items[name]--;
+    //如果物品数量为0，则将物品移出字典
+    if(_items[name]==0){
+      _items.Remove(name);
+    }
+  }
+
+
+  //没有物品时则返回false
+  Debug.Log(&quot;cannotconsume&quot;+name);
+  return false
+}
+
+//更新物品列表
+DisplayItems();
+return true;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-09/" data-id="cji327co90015vcviur916109" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-08" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/简易3d游戏制作笔记-08/" class="article-date">
+  <time datetime="2018-04-12T07:21:52.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-08/">简易3d游戏制作笔记-08</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="把物品储存在集合字典中"><a href="#把物品储存在集合字典中" class="headerlink" title="把物品储存在集合字典中"></a>把物品储存在集合字典中</h1><h2 id="基本实现思路"><a href="#基本实现思路" class="headerlink" title="基本实现思路"></a>基本实现思路</h2><ul>
+<li>在InventoryManager中添加两个方法</li>
+</ul>
+<pre><code>private Dictionary&lt;string, int&gt; _items;
+
+private void DisplayItems(){
+  string itemDisplay = &quot;Items: &quot;;
+  foreach(KeyValuePair&lt;string,int&gt; item in _items){
+    itemDisplay +=item.Key +&quot;(&quot;+item.Value+&quot;)&quot;;
+  }
+  Debug.Log(itemDisplay);
+}
+
+public void AddItem(string name){
+  if(_items.ContainsKey(name)){
+    _items[name]+=1;
+  }
+  else{
+    _item[name] =1
+  }
+
+  DisplayItems();
+}
+</code></pre><ul>
+<li>再添加数据访问的方法到InventoryManager中</li>
+</ul>
+<pre><code>public List&lt;string&gt; GetItemList(){
+  //返回储存的物品名称的列表
+  List&lt;string&gt; list = new List&lt;string&gt;(_items.Keys);
+  return list;
+}
+
+public int GetItemCount(string name){
+  //检测列表中是否有Key为name的物品并返回物品的数量
+  if(_items.ContainsKey(name)){
+    return _items[name];
+  }
+  return 0;
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/" data-id="cji327co90017vcviv868ygd6" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-07" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/简易3d游戏制作笔记-07/" class="article-date">
+  <time datetime="2018-04-12T05:17:42.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-07/">简易3d游戏制作笔记-07</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="管理仓库数据和游戏状态（MVC设计模式）"><a href="#管理仓库数据和游戏状态（MVC设计模式）" class="headerlink" title="管理仓库数据和游戏状态（MVC设计模式）"></a>管理仓库数据和游戏状态（MVC设计模式）</h1><h2 id="基本设计思路"><a href="#基本设计思路" class="headerlink" title="基本设计思路"></a>基本设计思路</h2><ul>
+<li>使用PlayerManager维护玩家状态</li>
+<li>使用InventoryManager维护玩家的物品清单</li>
+<li>使用Managers来统一管理所有的Manager(如PlayerManager,InventoryManager)</li>
+<li>为了让Managers(主管理器)以一种一致的方式来引用其他模块，这些模块必须从一个基类继承共同的属性，将这个共同的基类定义为一个接口</li>
+</ul>
+<h2 id="具体代码设计"><a href="#具体代码设计" class="headerlink" title="具体代码设计"></a>具体代码设计</h2><ul>
+<li><p>基本的基类接口(IGameManager)</p>
+<pre><code>//通常以I+接口名的格式来命名接口
+public interface IGameManager{
+  ManagerStatus status{get;}
+
+  //各个Manager用来初始化的方法
+  void Startup();
+}
+</code></pre></li>
+<li><p>实现枚举类型ManagerStatus</p>
+<pre><code>public enum ManagerStatus{
+  //管理器所有的可能状态
+  Shutdown,
+  Initializing,
+  Started
+}
+</code></pre></li>
+<li><p>编写InventoryManager脚本</p>
+<pre><code>//实现IGameManager接口
+public class InventoryManager : MonoBehaviour, IGameManager{
+  public ManagerStatus status {get;private set;}
+
+  public void Startup(){
+    //如果是长任务改为.Initializing
+    stauts = ManagerStatus.Started;
+  }
+}
+</code></pre></li>
+<li><p>编写PlayerManager脚本</p>
+<pre><code>public class PlayerManager : MonoBehaviour, IGameManager{
+  public ManagerStatus status{get;private set;}
+
+  public int health {get;private set;}
+  public int maxhealth {get;private set;}
+
+  public void Startup(){
+    health = 50;
+    maxhealth = 100;
+    初始化属性
+
+    status = ManagerStatus.Started;
+  }
+
+  public void ChangeHealth(int value){
+    health += value;
+    if(health&gt;maxhealth){
+      health = maxhealth;
+    }
+    else if(health&lt;0){
+      health = 0;
+    }
+    //在控制台输出
+    Debug.Log(&quot;Health: &quot;+health+&quot;/&quot;+&quot;maxhealth&quot;);
+  }
+}
+</code></pre></li>
+<li><p>编写Managers脚本（主管理器）</p>
+<pre><code>[RequireComponent(typeof(PlayerManager))]
+[RequireComponent(typeof(InventoryManager))]
+
+public class Managers : MonoBehaviour{
+  public static PlayerManager Player{get;private set;}
+  public static InventoryManager Inventory{get;private set;}
+  //声明
+
+  private List&lt;IGameManager&gt; _startSequence;
+  //用于保存Manager的List
+
+  void Awake(){
+    Player = GetComponent&lt;PlayerManager&gt;();
+    Inventory = GetComponent&lt;InventoryManager&gt;();
+
+    _startSequence = new List&lt;IGameManager&gt;();
+    _startSequence.Add(Player);
+    _startSequence.Add(Inventory);
+    //将Manager添加到List中
+
+    StartCoroutine(StartupManagers());
+    //异步启动序列，初始化Manager
+  }
+
+  private IEnumerator StartupManagers(){
+    foreach(IGameManager manager in _startSequence){
+      manager.Startup();
+    }
+
+    yield return null;暂停一下
+
+    int numModules = _startSequence.Count;
+    //需初始化的模块总数
+    int numReady = 0;
+    //初始化完毕的模块数
+
+    whilie(numReady&lt;numModules){
+      int lastReady = numReady;
+      //记录当前初始化完成的模块数
+      numReady = 0;
+
+      foreach(IGameManager manager in _startSequence){
+        if(manager.status == ManagerStatus.Started){
+          //在所有模块初始化完毕之前，如果有模块初始化完毕，则numReady++
+          numReady++
+        }
+      }
+
+      if(numReady&gt;lastReady){
+        //如果初始化完毕的模块数大于当前所记录的初始化完毕的模块数（也就是lastReady的值），就更新
+        Debug.Log(&quot;Process: &quot;+numReady+&quot;/&quot;+numModules);
+        yield retrun null;
+      }
+    }
+    Debug.Log(&quot;All managers started up&quot;);
+  }        
+}
+</code></pre></li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-07/" data-id="cji327co90012vcvir5kjsjvj" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-06" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/简易3d游戏制作笔记-06/" class="article-date">
+  <time datetime="2018-04-12T05:06:30.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-06/">简易3d游戏制作笔记-06</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="通过Collider-SendMessage向周围的GameObject尝试调用指定的函数"><a href="#通过Collider-SendMessage向周围的GameObject尝试调用指定的函数" class="headerlink" title="通过Collider.SendMessage向周围的GameObject尝试调用指定的函数"></a>通过Collider.SendMessage向周围的GameObject尝试调用指定的函数</h1><h2 id="以玩家在游戏中通过按键控制门的开关为例"><a href="#以玩家在游戏中通过按键控制门的开关为例" class="headerlink" title="以玩家在游戏中通过按键控制门的开关为例"></a>以玩家在游戏中通过按键控制门的开关为例</h2><pre><code>if(Input.GetButtonDown(&quot;Fire3&quot;))
+{
+  //检测到按键后，以transform.position为球心，以radius为半径，检测周围的碰撞器，并储存在Collider[]中
+  Collider[] hitColliders = Physics.OverlapSphere(transform.position,radius);
+}
+
+foreach(Collider hitCollider in hitColliders)
+{
+  //遍历hitColliders中的所有元素，并通过SendMessage()方法，尝试调用Operate()方法，并在元素不包含此方法时不报错
+  hitCollider.SendMessage(&quot;Operate&quot;,SendMessageOptions.DontRequireReceiver);
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-06/" data-id="cji327co90011vcvidc6dvvhi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-简易3d游戏制作笔记-05" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/简易3d游戏制作笔记-05/" class="article-date">
+  <time datetime="2018-04-12T04:54:15.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-05/">简易3d游戏制作笔记-05</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="游戏Animator设置"><a href="#游戏Animator设置" class="headerlink" title="游戏Animator设置"></a>游戏Animator设置</h1><h2 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h2><ol>
+<li>将动画片段相关参数（Animation Type,Import Animation)等设置正确</li>
+<li>在导入的模型上定义动画剪辑</li>
+<li>为动画创建动画控制器，并添加特定的Parameters（浮点值Speed,布尔值Jumping）</li>
+<li>在玩家移动的脚本中的相应逻辑处添加代码</li>
+</ol>
+<pre><code>_animator = GetComponent&lt;Animatior&gt;();//获取Animator的引用
+
+_animator.SetFloat(&quot;Speed&quot;,movement.sqrMagnitude);
+_animator.SetBool(&quot;Jumping&quot;,true);
+_animator.SetBool(&quot;Jumping&quot;,false);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-05/" data-id="cji327co9000xvcvipo028ww9" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Unity/">Unity</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/06/06/二分查找树/">二分查找树</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/27/基于二分查找的有序数组实现的符号表/">基于二分查找的有序数组实现的符号表</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/23/优先队列/">优先队列</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/15/快速排序/">快速paixv</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Yang Li<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

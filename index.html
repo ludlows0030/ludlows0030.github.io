@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -65,6 +65,188 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-红黑树" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/08/红黑树/" class="article-date">
+  <time datetime="2018-06-08T03:46:38.000Z" itemprop="datePublished">2018-06-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/08/红黑树/">红黑树</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><h2 id="了解红黑树前先了解2-3查找树"><a href="#了解红黑树前先了解2-3查找树" class="headerlink" title="了解红黑树前先了解2-3查找树"></a>了解红黑树前先了解2-3查找树</h2><h3 id="2-3查找树的定义"><a href="#2-3查找树的定义" class="headerlink" title="2-3查找树的定义"></a>2-3查找树的定义</h3><pre><code>定义
+一棵2-3查找树或为一棵空树，或由以下结点组成：
+· 2-结点，含有一个键（及其对应的值）和两条链接，左链接指向2-3树中的键都小于该结点，右链接指向的2-3树中的键都大于该结点
+· 3-结点，含有两个键（及其对应的值）和三条链接，左链接指向2-3树中的键都小于该结点，中链接指向的2-3树中的键位于该结点两个键之间，右链接指向的2-3树中的键都大于该结点
+</code></pre><h3 id="2-3树的查找"><a href="#2-3树的查找" class="headerlink" title="2-3树的查找"></a>2-3树的查找</h3><p>2-3树的查找与普通二分查找树的类似</p>
+<h3 id="向2-结点中插入新键"><a href="#向2-结点中插入新键" class="headerlink" title="向2-结点中插入新键"></a>向2-结点中插入新键</h3><p>将2-结点替换为3-结点，将要插入的键保存其中，以保证树的平衡</p>
+<h3 id="向一棵只含有一个3-结点的树种插入新键"><a href="#向一棵只含有一个3-结点的树种插入新键" class="headerlink" title="向一棵只含有一个3-结点的树种插入新键"></a>向一棵只含有一个3-结点的树种插入新键</h3><ul>
+<li>先临时将新键存入该结点中，使之成为一个4-结点</li>
+<li>将一个4-结点转为由3个2-结点组成的树，此时要再细分父结点的情况</li>
+</ul>
+<h4 id="向一个父结点为2-结点的3-结点中插入新键"><a href="#向一个父结点为2-结点的3-结点中插入新键" class="headerlink" title="向一个父结点为2-结点的3-结点中插入新键"></a>向一个父结点为2-结点的3-结点中插入新键</h4><ul>
+<li>按照前述步骤 将4结点分解后，将位于中间的键移动至原来的父结点中，使之成为一个3-结点</li>
+</ul>
+<h4 id="向一个父结点为3-结点的3-结点中插入新键"><a href="#向一个父结点为3-结点的3-结点中插入新键" class="headerlink" title="向一个父结点为3-结点的3-结点中插入新键"></a>向一个父结点为3-结点的3-结点中插入新键</h4><ul>
+<li>按照前述步骤 将4结点分解后，将位于中间的键移动至原来的父结点中，使之成为一个4-结点</li>
+<li>再继续分解4结点，并将中键向上移动，直至遇见根结点或一个2-结点</li>
+</ul>
+<h4 id="分解根结点"><a href="#分解根结点" class="headerlink" title="分解根结点"></a>分解根结点</h4><ul>
+<li>当根节点变为4-结点后，将4-结点分解，并为中间的键创造一个新的结点，使得整棵树的高度+1，整棵树仍然保持着平衡</li>
+</ul>
+<h2 id="红黑二叉查找树"><a href="#红黑二叉查找树" class="headerlink" title="红黑二叉查找树"></a>红黑二叉查找树</h2><pre><code>用于实现2-3查找树的具体数据结构
+</code></pre><h3 id="基本思想"><a href="#基本思想" class="headerlink" title="基本思想"></a>基本思想</h3><p>用标准的二叉查找树和一些额外的信息（用来保存3结点）来表示2-3查找树</p>
+<h3 id="具体思路"><a href="#具体思路" class="headerlink" title="具体思路"></a>具体思路</h3><ul>
+<li>将树中的链接分为两种类型</li>
+<li>红链接将两个2-结点连接起来构成一个3-结点</li>
+<li>黑链接是2-3树中的普通链接</li>
+</ul>
+<h3 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h3><pre><code>定义
+含有红黑链接并满足下列条件
+· 红链接均为左链接；
+· 没有任何一个结点同时和两条红链接相连
+· 该树是完美黑色平衡的，任意空链接到根结点的路径上的黑链接数量相同
+</code></pre><h3 id="颜色表示"><a href="#颜色表示" class="headerlink" title="颜色表示"></a>颜色表示</h3><ul>
+<li>将链接的颜色保存在表示结点的Node数据类型的布尔变量color中</li>
+<li>如果指向结点的链接为红，变量为true</li>
+<li><p>反之为false，且约定空链接为false</p>
+<h3 id="特殊情况"><a href="#特殊情况" class="headerlink" title="特殊情况"></a>特殊情况</h3><p>为保证满足 没有任何一个结点同时和两条红链接相连 我们针对3种不同的情况采取措施</p>
+</li>
+<li><p>结点右链接为红，左链接为黑</p>
+</li>
+<li>结点左链接为红，左结点的左链接依然为红（左结点同两条红链接相连）</li>
+<li>结点左右链接都为红</li>
+</ul>
+<h3 id="代码（插入算法）"><a href="#代码（插入算法）" class="headerlink" title="代码（插入算法）"></a>代码（插入算法）</h3><pre><code>public class RedBlackBST&lt;Key extends Comparable&lt;Key&gt;, Value&gt;
+{
+    private Node root;
+
+    private static final boolean RED = true;
+    private static final boolean BlACK = false;
+
+    private class Node
+    {
+        Key key;//键
+        Value val;//值
+        Node left,right;//左右子树
+        int N;//结点计数器
+        boolean color;//指向该结点的链接的颜色
+
+        Node(Key key,Value val,int N,boolean color)
+        {
+            this.key = key;
+            this.val = val;
+            this.N = N;
+            this.color = color;
+        }
+    }
+
+    private boolean isRed(Node x)
+    {
+        if(x==null) return false;
+        return x.color == RED;
+    }
+
+    /*
+    向左旋转
+    将右子树的左子树给父结点
+    父结点和右子树交换位置，父结点颜色给右子树，父结点的颜色变为RED
+    */
+    private Node rotateLeft(Node h)
+    {
+        Node x = h.left;  
+        h.right = x.left;
+        x.left = h; 
+        x.color = h.color;
+        h.color = RED;
+        x.N = h.N;
+        h.N = size(left)+size(right)+1;
+        return x;
+    }
+
+
+    /*
+    向右旋转
+    将左子树的右子树给父结点
+    父结点和左子树交换位置，父结点颜色给左子树，父结点的颜色变为RED
+    */
+    private Node rotateRight(Node h)
+    {
+        Node x = h.right;
+        h.left = x.right;
+        x.right = h;
+        x.color = h.color;
+        h.color = RED;
+        x.N = h.N;
+        h.N = size(left)+size(right)+1;
+        return x;
+    }
+
+    private void filpColor(Node h)
+    {
+        h.color = RED;
+        h.left.color = BlACK;
+        h.right.color = BlACK;
+    }
+
+    private int size()
+    {
+        if(x == null) return 0;
+        else return x.N;
+    }
+
+    public void put(Key key,Value val)
+    {
+        root = put(root,key,val);
+        root.color = BlACK;//保证根结点颜色为BLACK
+    }
+
+    private Node put(Node h,Key key,Value val)
+    {
+        if(h==null) return new Node(key,val,1);//如果当前结点为空，则创建一个新结点
+        int cmp = key.compareTo(h.key);
+        if(cmp&gt;0) h.right = put(h.right,key,val);//大，找右边
+        else if(cmp&lt;0) h.left = put(h.left,key,val);//小，找左边
+        else h.val = val;//相等，更新值
+
+        if(isRed(h.right)&amp;&amp;!isRed(h.left)) rotateLeft(h); //右红左不红，向左旋转
+        if(isRed(h.left)&amp;&amp;isRed(h.left.left)) rotateRight(h); //左连续红 右转
+        if(isRed(h.left)&amp;&amp;isRed(h.left)) filpColor(h); //都红，变色
+
+        h.N = size(left)+size(right)+1;//更新结点计数器
+        return h;//返回自身，相当于迭代完成后，沿着路径向上重置
+    }
+
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/06/08/红黑树/" data-id="cji5gq7xp001atgvitm3f2jcl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-二分查找树" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -304,7 +486,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/06/06/二分查找树/" data-id="cji32g4o900055wvi4tdug6sd" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/06/06/二分查找树/" data-id="cji5gq7wn0004tgvi88qzu1b0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -562,7 +744,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/27/基于二分查找的有序数组实现的符号表/" data-id="cji32g4o9000b5wvin4dqa9nc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/27/基于二分查找的有序数组实现的符号表/" data-id="cji5gq7x9000ftgviqhcrtw6j" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -747,7 +929,7 @@ private void sink(int k)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/23/优先队列/" data-id="cji32g4o900085wvin73dwsns" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/23/优先队列/" data-id="cji5gq7x30005tgvit46wf7m0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法第（4）版/">算法第（4）版</a></li></ul>
@@ -866,7 +1048,7 @@ private void sink(int k)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/15/快速排序/" data-id="cji32g4o9000l5wvia3fccbr0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/15/快速排序/" data-id="cji5gq7x9000mtgvijnjh527q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -907,7 +1089,7 @@ private void sink(int k)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/09/《刺杀骑士团长》摘抄/" data-id="cji32g4o900045wvio886rjao" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/09/《刺杀骑士团长》摘抄/" data-id="cji5gq7wn0000tgvisyvva0pp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/小说摘抄/">小说摘抄</a></li></ul>
@@ -1037,7 +1219,7 @@ public class Merge{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/08/归并排序/" data-id="cji32g4o9000d5wvifuo29uhv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/08/归并排序/" data-id="cji5gq7x8000dtgvi6h9awxiv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -1158,7 +1340,7 @@ public class Merge{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/07/选择排序、插入排序和希尔排序/" data-id="cji32g4p5001u5wvikratan60" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/07/选择排序、插入排序和希尔排序/" data-id="cji5gq7xp001mtgvi13p25mtd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -1440,7 +1622,7 @@ public class Permutation {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/04/算法（第4版）公开课编程题2/" data-id="cji32g4op001h5wvic690ymzc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/04/算法（第4版）公开课编程题2/" data-id="cji5gq7xp001ptgvibnkg00zh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -1518,74 +1700,7 @@ public class Permutation {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/02/可以返回最大值的栈/" data-id="cji32g4o900095wvicjijjtx0" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-构造一个由两个栈组成的队列" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/05/02/构造一个由两个栈组成的队列/" class="article-date">
-  <time datetime="2018-05-02T05:47:28.000Z" itemprop="datePublished">2018-05-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/05/02/构造一个由两个栈组成的队列/">构造一个由两个栈组成的队列</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="如何构造一个由两个栈组成的队列"><a href="#如何构造一个由两个栈组成的队列" class="headerlink" title="如何构造一个由两个栈组成的队列"></a>如何构造一个由两个栈组成的队列</h1><h3 id="队列所需的操作"><a href="#队列所需的操作" class="headerlink" title="队列所需的操作"></a>队列所需的操作</h3><ul>
-<li>enqueue ：将一个元素加入到队列的末尾</li>
-<li>dequeue ： 将一个元素从队列的顶部移除</li>
-</ul>
-<h3 id="栈的操作"><a href="#栈的操作" class="headerlink" title="栈的操作"></a>栈的操作</h3><ul>
-<li>pop : 将一个元素从栈顶移除</li>
-<li>push ：将一个元素加入到栈顶</li>
-</ul>
-<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
-<li>可以将队列分为两部分 inbox outbox(两个栈)</li>
-<li>当outbox为空的时候，将inbox的元素逐个pop并push到outbox中，此时outbox的栈顶为最先加入到inbox的元素</li>
-</ul>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code>public static class QueueWithTwoStakcs{
-  private Stack&lt;Item&gt; inbox = new Stack&lt;Item&gt;;
-  private Stack&lt;Item&gt; outbox = new Stack&lt;Item&gt;;
-
-  public void enqueue(Item item){
-    inbox.push(item);
-  }
-
-  public Item dequeue(){
-    if(outbox.isEmpty()){
-      while(!inbox.isEmpty){
-        outbox.push(inbox.pop());
-      }
-    }
-    return outbox.pop();
-  }
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/02/构造一个由两个栈组成的队列/" data-id="cji32g4o9000i5wviz6bdjftk" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/05/02/可以返回最大值的栈/" data-id="cji5gq7x40008tgviwpkxi1wc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li></ul>
@@ -1601,7 +1716,7 @@ public class Permutation {
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1625,14 +1740,14 @@ public class Permutation {
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 12.5px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 15px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 17.5px;">算法（第4版）</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
     </div>
@@ -1642,9 +1757,13 @@ public class Permutation {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/08/红黑树/">红黑树</a>
+          </li>
         
           <li>
             <a href="/2018/06/06/二分查找树/">二分查找树</a>
@@ -1660,10 +1779,6 @@ public class Permutation {
         
           <li>
             <a href="/2018/05/15/快速排序/">快速paixv</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
           </li>
         
       </ul>

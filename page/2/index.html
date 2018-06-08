@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -65,6 +65,73 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-构造一个由两个栈组成的队列" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/05/02/构造一个由两个栈组成的队列/" class="article-date">
+  <time datetime="2018-05-02T05:47:28.000Z" itemprop="datePublished">2018-05-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/05/02/构造一个由两个栈组成的队列/">构造一个由两个栈组成的队列</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="如何构造一个由两个栈组成的队列"><a href="#如何构造一个由两个栈组成的队列" class="headerlink" title="如何构造一个由两个栈组成的队列"></a>如何构造一个由两个栈组成的队列</h1><h3 id="队列所需的操作"><a href="#队列所需的操作" class="headerlink" title="队列所需的操作"></a>队列所需的操作</h3><ul>
+<li>enqueue ：将一个元素加入到队列的末尾</li>
+<li>dequeue ： 将一个元素从队列的顶部移除</li>
+</ul>
+<h3 id="栈的操作"><a href="#栈的操作" class="headerlink" title="栈的操作"></a>栈的操作</h3><ul>
+<li>pop : 将一个元素从栈顶移除</li>
+<li>push ：将一个元素加入到栈顶</li>
+</ul>
+<h3 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h3><ul>
+<li>可以将队列分为两部分 inbox outbox(两个栈)</li>
+<li>当outbox为空的时候，将inbox的元素逐个pop并push到outbox中，此时outbox的栈顶为最先加入到inbox的元素</li>
+</ul>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><pre><code>public static class QueueWithTwoStakcs{
+  private Stack&lt;Item&gt; inbox = new Stack&lt;Item&gt;;
+  private Stack&lt;Item&gt; outbox = new Stack&lt;Item&gt;;
+
+  public void enqueue(Item item){
+    inbox.push(item);
+  }
+
+  public Item dequeue(){
+    if(outbox.isEmpty()){
+      while(!inbox.isEmpty){
+        outbox.push(inbox.pop());
+      }
+    }
+    return outbox.pop();
+  }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/05/02/构造一个由两个栈组成的队列/" data-id="cji5gq7x7000btgvij73u7s9q" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法-第4版/">算法(第4版)</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-JAVA迭代器" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -134,7 +201,7 @@ while(i.hasNext()){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/27/JAVA迭代器/" data-id="cji32g4o900035wviemlroo6v" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/27/JAVA迭代器/" data-id="cji5gq7wn0001tgviluv6wz34" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -220,7 +287,7 @@ oldlast.next = last;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/26/算法（第四版）公开课笔记-单向链表/" data-id="cji32g4op001k5wvil1dqta6n" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/26/算法（第四版）公开课笔记-单向链表/" data-id="cji5gq7xp001ktgvitzaz4klv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -421,7 +488,7 @@ public class PercolationStats {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/26/算法（第4版）公开课编程题1/" data-id="cji32g4op001f5wviu3704jfg" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/26/算法（第4版）公开课编程题1/" data-id="cji5gq7xp001ctgvifvorwhmi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法（第4版）/">算法（第4版）</a></li></ul>
@@ -521,7 +588,7 @@ public class PercolationStats {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/" data-id="cji32g4op001c5wvimrj31e99" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-11/" data-id="cji5gq7xp001ftgvi53af48zq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -581,7 +648,7 @@ Messenger.RemoveListener(GameEvent.消息名，接收到消息后调用的方法
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-10/" data-id="cji32g4op001a5wvijfq0cyds" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-10/" data-id="cji5gq7x90011tgvicozvhaoi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -652,7 +719,7 @@ return true;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-09/" data-id="cji32g4op00175wvix7bebszf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/13/简易3d游戏制作笔记-09/" data-id="cji5gq7xp0017tgvi2rzl5i0k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -729,7 +796,7 @@ public int GetItemCount(string name){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/" data-id="cji32g4op00155wvi2h23tf39" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-08/" data-id="cji5gq7x90012tgviwv559yas" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -890,7 +957,7 @@ public class Managers : MonoBehaviour{
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-07/" data-id="cji32g4op00125wvihbu3vrb5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-07/" data-id="cji5gq7x9000ytgvipfvwaek7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -939,56 +1006,7 @@ foreach(Collider hitCollider in hitColliders)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-06/" data-id="cji32g4op00115wvig3hmqi2v" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-简易3d游戏制作笔记-05" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/04/12/简易3d游戏制作笔记-05/" class="article-date">
-  <time datetime="2018-04-12T04:54:15.000Z" itemprop="datePublished">2018-04-12</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-05/">简易3d游戏制作笔记-05</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="游戏Animator设置"><a href="#游戏Animator设置" class="headerlink" title="游戏Animator设置"></a>游戏Animator设置</h1><h2 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h2><ol>
-<li>将动画片段相关参数（Animation Type,Import Animation)等设置正确</li>
-<li>在导入的模型上定义动画剪辑</li>
-<li>为动画创建动画控制器，并添加特定的Parameters（浮点值Speed,布尔值Jumping）</li>
-<li>在玩家移动的脚本中的相应逻辑处添加代码</li>
-</ol>
-<pre><code>_animator = GetComponent&lt;Animatior&gt;();//获取Animator的引用
-
-_animator.SetFloat(&quot;Speed&quot;,movement.sqrMagnitude);
-_animator.SetBool(&quot;Jumping&quot;,true);
-_animator.SetBool(&quot;Jumping&quot;,false);
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-05/" data-id="cji32g4op000y5wvis6u1nbul" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-06/" data-id="cji5gq7x90015tgvir78ir3jw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -1004,7 +1022,7 @@ _animator.SetBool(&quot;Jumping&quot;,false);
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1028,14 +1046,14 @@ _animator.SetBool(&quot;Jumping&quot;,false);
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 12.5px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 15px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 17.5px;">算法（第4版）</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
     </div>
@@ -1045,9 +1063,13 @@ _animator.SetBool(&quot;Jumping&quot;,false);
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/08/红黑树/">红黑树</a>
+          </li>
         
           <li>
             <a href="/2018/06/06/二分查找树/">二分查找树</a>
@@ -1063,10 +1085,6 @@ _animator.SetBool(&quot;Jumping&quot;,false);
         
           <li>
             <a href="/2018/05/15/快速排序/">快速paixv</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
           </li>
         
       </ul>

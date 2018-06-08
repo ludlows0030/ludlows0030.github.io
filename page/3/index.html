@@ -55,7 +55,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -65,6 +65,55 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-简易3d游戏制作笔记-05" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/12/简易3d游戏制作笔记-05/" class="article-date">
+  <time datetime="2018-04-12T04:54:15.000Z" itemprop="datePublished">2018-04-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/12/简易3d游戏制作笔记-05/">简易3d游戏制作笔记-05</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="游戏Animator设置"><a href="#游戏Animator设置" class="headerlink" title="游戏Animator设置"></a>游戏Animator设置</h1><h2 id="基本过程"><a href="#基本过程" class="headerlink" title="基本过程"></a>基本过程</h2><ol>
+<li>将动画片段相关参数（Animation Type,Import Animation)等设置正确</li>
+<li>在导入的模型上定义动画剪辑</li>
+<li>为动画创建动画控制器，并添加特定的Parameters（浮点值Speed,布尔值Jumping）</li>
+<li>在玩家移动的脚本中的相应逻辑处添加代码</li>
+</ol>
+<pre><code>_animator = GetComponent&lt;Animatior&gt;();//获取Animator的引用
+
+_animator.SetFloat(&quot;Speed&quot;,movement.sqrMagnitude);
+_animator.SetBool(&quot;Jumping&quot;,true);
+_animator.SetBool(&quot;Jumping&quot;,false);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/12/简易3d游戏制作笔记-05/" data-id="cji5gq7xp001htgvizxngorvm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-CRT中电子枪是如何绘图的？什么是场消隐期？" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -94,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/02/CRT中电子枪是如何绘图的？什么是场消隐期？/" data-id="cji32g4nu00005wvifd3kykxw" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/02/CRT中电子枪是如何绘图的？什么是场消隐期？/" data-id="cji5gq7wn0003tgvicft88el2" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li></ul>
@@ -166,7 +215,7 @@ while (time spent this frame)&lt;targetFrameTime
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/游戏编程算法与技巧习题01/" data-id="cji32g4o9000g5wviq65p4vg0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/游戏编程算法与技巧习题01/" data-id="cji5gq7x9000htgviur1bxb98" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/游戏编程算法与技巧习题/">游戏编程算法与技巧习题</a></li></ul>
@@ -261,7 +310,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/" data-id="cji32g4op000x5wvirpjo2xgz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/04/01/简易3d游戏制作笔记-04/" data-id="cji5gq7x9000ttgvixzbhp9vz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -333,7 +382,7 @@ void OnControllerColliderHit(ControllerColliderHit hit)
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/" data-id="cji32g4op000u5wviyi5pvgp0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/30/简易3d游戏制作笔记-03/" data-id="cji5gq7x9000wtgviz7sy4kfh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -425,7 +474,7 @@ charController.Move(movement);
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-02/" data-id="cji32g4o9000n5wvi4zmukf4m" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-02/" data-id="cji5gq7x9000ptgviyi8b1ivb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -491,7 +540,7 @@ void LateUpdate(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/" data-id="cji32g4op000s5wvi8gtnf6i7" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/简易3d游戏制作笔记-01/" data-id="cji5gq7x9000rtgviwq8qsgnf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -567,7 +616,7 @@ void LateUpdate(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/29/简单3d游戏制作笔记-00/" data-id="cji32g4op000q5wviyya3f3qj" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/29/简单3d游戏制作笔记-00/" data-id="cji5gq7x9000ktgvim5re2age" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Unity/">Unity</a></li></ul>
@@ -614,7 +663,7 @@ void LateUpdate(){
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/28/hello-world/" data-id="cji32g4o900015wvimf0kxo36" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/28/hello-world/" data-id="cji5gq7x60009tgvia8lvom1w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -628,7 +677,7 @@ void LateUpdate(){
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 </section>
@@ -652,14 +701,14 @@ void LateUpdate(){
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 13.33px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 13.33px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 16.67px;">算法（第4版）</a>
+      <a href="/tags/Unity/" style="font-size: 20px;">Unity</a> <a href="/tags/小说摘抄/" style="font-size: 10px;">小说摘抄</a> <a href="/tags/游戏编程算法与技巧习题/" style="font-size: 12.5px;">游戏编程算法与技巧习题</a> <a href="/tags/算法-第4版/" style="font-size: 15px;">算法(第4版)</a> <a href="/tags/算法第（4）版/" style="font-size: 10px;">算法第（4）版</a> <a href="/tags/算法（第4版）/" style="font-size: 17.5px;">算法（第4版）</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">May 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">April 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li></ul>
     </div>
@@ -669,9 +718,13 @@ void LateUpdate(){
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/06/08/红黑树/">红黑树</a>
+          </li>
         
           <li>
             <a href="/2018/06/06/二分查找树/">二分查找树</a>
@@ -687,10 +740,6 @@ void LateUpdate(){
         
           <li>
             <a href="/2018/05/15/快速排序/">快速paixv</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/09/《刺杀骑士团长》摘抄/">《刺杀骑士团长》摘抄</a>
           </li>
         
       </ul>
